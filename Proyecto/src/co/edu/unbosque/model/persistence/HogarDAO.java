@@ -1,5 +1,61 @@
 package co.edu.unbosque.model.persistence;
 
-public class HogarDAO {
+import java.util.ArrayList;
+
+import co.edu.unbosque.model.Hogar;
+
+public class HogarDAO implements DAO<Hogar> {
+
+	private ArrayList<Hogar> lista;
+
+	public HogarDAO() {
+		lista = new ArrayList<>();
+	}
+
+	@Override
+	public void crear(Hogar nuevoDato) {
+		lista.add(nuevoDato);
+	}
+
+	@Override
+	public boolean actualizar(int indice, Hogar actualizarDato) {
+		if (indice < 0 || indice >= lista.size()) {
+			return false;
+		} else {
+			lista.set(indice, actualizarDato);
+			return true;
+		}
+	}
+
+	@Override
+	public boolean eliminar(int indice) {
+		if (indice < 0 || indice >= lista.size()) {
+			return false;
+		} else {
+			lista.remove(indice);
+			return true;
+		}
+	}
+
+	private String contenido;
+	private int n;
+	
+	@Override
+	public String mostrarDatos() {
+		contenido = "";
+		n = 0;
+
+		lista.forEach((objeto) -> {
+			contenido += "\n" + n + ". " + objeto.toString();
+			n++;
+		});
+
+		return contenido;
+	}
+
+	@Override
+	public int contar() {
+		return lista.size();
+	}
 
 }
