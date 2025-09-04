@@ -1,0 +1,88 @@
+package co.edu.unbosque.view;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Registrarse extends JPanel{
+	
+	private JTextField usuario;
+	private JTextField contraseña;
+	private JButton botonInicioSesion;
+	
+	public Registrarse() {
+		iniciarComponente();
+	}
+	
+	private void iniciarComponente() {
+		this.setBounds(0, 0, 1280, 720);
+		this.setLayout(null);
+		
+		JPanel arriba = new JPanel();
+		arriba.setBounds(0, 0, 1280, 100);
+		arriba.setBackground(Color.YELLOW);
+		
+		usuario = new JTextField();
+		usuario.setBounds(450, 290, 380, 50);
+		usuario.setFont(new Font("Arial", Font.BOLD, 22));
+		
+		contraseña = new JTextField();
+		contraseña.setBounds(450, 440, 380, 50);
+		contraseña.setFont(new Font("Arial", Font.BOLD, 22));
+		
+		botonInicioSesion = new JButton("Iniciar Sesion");
+		botonInicioSesion.setBounds(590, 490, 120, 30);
+		botonInicioSesion.setForeground(Color.BLUE);
+		botonInicioSesion.setContentAreaFilled(false);
+		botonInicioSesion.setBorderPainted(false);
+		botonInicioSesion.setFocusPainted(false);
+		
+		crearLabel("Registro", 550, 0, 381, 100, Color.BLACK,50);
+		crearLabel("Usuario:", 450, 255,138,30,Color.BLACK,35);
+		crearLabel("Contraseña:", 450, 405,200,30,Color.BLACK,35);
+		crearLabel("¿Ya tiene una cuenta?", 450, 490,200,30,Color.BLACK,15);
+		
+		this.add(arriba);
+		this.add(usuario);
+		this.add(contraseña);
+		this.add(botonInicioSesion);
+	}
+	
+	private void crearLabel(String texto, int x, int y, int ancho, int alto, Color color, int tamañoTexto) {
+		JLabel label = new JLabel(texto);
+		label.setBounds(x, y, ancho, alto);
+		label.setForeground(color);
+		label.setFont(new Font("Arial", Font.BOLD, tamañoTexto));
+		this.add(label);
+	}
+
+	public JTextField getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(JTextField usuario) {
+		this.usuario = usuario;
+	}
+
+	public JTextField getContraseña() {
+		return contraseña;
+	}
+
+	public void setContraseña(JTextField contraseña) {
+		this.contraseña = contraseña;
+	}
+
+	public JButton getBotonInicioSesion() {
+		return botonInicioSesion;
+	}
+
+	public void setBotonInicioSesion(JButton botonInicioSesion) {
+		this.botonInicioSesion = botonInicioSesion;
+	}
+	
+	
+}
