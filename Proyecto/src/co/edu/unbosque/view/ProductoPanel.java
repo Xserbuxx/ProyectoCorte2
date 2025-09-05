@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -16,7 +17,7 @@ public class ProductoPanel extends JPanel{
 	
 	private JButton info;
 	
-	public ProductoPanel(String nombre, String precio, String ruta, String id) {
+	public ProductoPanel(String nombre, float precio, String ruta, int id, ActionListener e) {
 		this.setPreferredSize(new Dimension(300, 470));
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -41,6 +42,7 @@ public class ProductoPanel extends JPanel{
 		
 		info = new JButton();
 		info.setActionCommand("Producto_"+id);
+		info.addActionListener(e);
 		info.setBounds(40, 500, 220, 50);
 		
 		this.add(info);

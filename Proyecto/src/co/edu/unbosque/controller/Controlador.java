@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
 import co.edu.unbosque.model.ModelFacade;
+import co.edu.unbosque.model.Producto;
+import co.edu.unbosque.model.Tecnologia;
 import co.edu.unbosque.view.*;
 
 public class Controlador implements ActionListener{
@@ -20,7 +22,6 @@ public class Controlador implements ActionListener{
 		
 	public void runGUI() {
 		vp.setVisible(true);
-		vp.getMp().getCom().actualizarCompra(vp.getMp().getVen());
 		agregarOyentes();
 	}
 	
@@ -41,8 +42,8 @@ public class Controlador implements ActionListener{
 		vp.getMp().getVen().getCambiarModo().addActionListener(this);
 		vp.getMp().getVen().getCambiarModo().setActionCommand("Boton Cambiar Modo Compra");
 		
-		for (ProductoPanel producto : vp.getMp().getVen().getPp()) {
-			producto.getInfo().addActionListener(this);
+		for (Producto producto : mf.getPrDAO().getLista()) {
+			vp.getMp().getCom().mostrarProductos(producto.getNombre(), producto.getPrecio(), producto.getRutaFoto(),producto.getId(), this);
 		}
 		
 	}

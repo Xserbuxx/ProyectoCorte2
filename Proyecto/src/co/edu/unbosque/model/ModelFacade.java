@@ -16,6 +16,7 @@ public class ModelFacade {
 	private RopaDAO roDAO;
 	private TecnologiaDAO teDAO;
 	private VehiculosDAO veDAO;
+	private ProductosDAO prDAO;
 
 	public ModelFacade() {
 		usDAO = new UsuariosDAO();
@@ -30,8 +31,14 @@ public class ModelFacade {
 		roDAO = new RopaDAO();
 		teDAO = new TecnologiaDAO();
 		veDAO = new VehiculosDAO();
+		prDAO = new ProductosDAO();
+		añadirListas();
 	}
-
+	
+	private void añadirListas() {
+		prDAO.getLista().addAll(teDAO.getLista());
+	}
+	
 	public UsuariosDAO getUsDAO() {
 		return usDAO;
 	}
@@ -128,4 +135,12 @@ public class ModelFacade {
 		this.veDAO = veDAO;
 	}
 
+	public ProductosDAO getPrDAO() {
+		return prDAO;
+	}
+
+	public void setPrDAO(ProductosDAO prDAO) {
+		this.prDAO = prDAO;
+	}
+	
 }

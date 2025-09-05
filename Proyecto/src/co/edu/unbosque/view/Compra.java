@@ -2,6 +2,8 @@ package co.edu.unbosque.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -44,15 +46,9 @@ public class Compra extends JPanel {
 		panelProductos = new JPanel();
 		panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.X_AXIS));
 
-		scroll = new JScrollPane(panelProductos, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
-				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-		scroll.setBounds(0, 100, 1265, 583);
-
 		crearLabel("Categoria:", 200, 0, 100, 100, Color.BLACK, 20);
 		
 		this.add(cambiarModo);
-		this.add(scroll);
 		this.add(Categorias);
 		this.add(arriba);
 	}
@@ -65,12 +61,13 @@ public class Compra extends JPanel {
 		this.add(label);
 	}
 	
-	public void actualizarCompra(Venta ven) {
-		if (ven.getPp() != null) {
-			for (ProductoPanel panel : ven.getPp()) {
-				panelProductos.add(panel);
-			}
-		}
+	public void mostrarProductos(String nombre, float precio, String ruta, int id, ActionListener e) {
+		panelProductos.add(new ProductoPanel(nombre, precio, ruta, id, e));
+		scroll = new JScrollPane(panelProductos, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
+				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
+		scroll.setBounds(0, 100, 1265, 583);
+		this.add(scroll);
 	}
 
 	public JComboBox<String> getCategorias() {

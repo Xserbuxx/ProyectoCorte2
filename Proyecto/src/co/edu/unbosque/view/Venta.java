@@ -3,21 +3,15 @@ package co.edu.unbosque.view;
 import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 public class Venta extends JPanel{
 	
-	private ArrayList<ProductoPanel> pp;
 	private JButton cambiarModo;
 	
 	public Venta() {
-		pp = new ArrayList<>();
 		iniciarComponente();
 	}
 
@@ -46,18 +40,6 @@ public class Venta extends JPanel{
 		label.setForeground(color);
 		label.setFont(new Font("Arial", Font.BOLD, tamañoTexto));
 		this.add(label);
-	}
-	
-	public void crearProducto(String nombre, String precio, String ruta, String id) {
-		pp.add(new ProductoPanel(nombre, precio, ruta, id));
-	}
-
-	public ArrayList<ProductoPanel> getPp() {
-		return pp;
-	}
-
-	public void setPp(ArrayList<ProductoPanel> pp) {
-		this.pp = pp;
 	}
 
 	public JButton getCambiarModo() {

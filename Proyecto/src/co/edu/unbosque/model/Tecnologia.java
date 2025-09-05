@@ -45,7 +45,7 @@ public class Tecnologia extends Producto {
 
 	@Override
 	public String toString() {
-		return "Tecnologia [marca=" + marca + ", modelo=" + modelo + "]";
+		return super.toString()+"Tecnologia [marca=" + marca + ", modelo=" + modelo + "]";
 	}
 
 }
