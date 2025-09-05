@@ -9,6 +9,7 @@ public class ManejarPanel extends JPanel{
 	private CardLayout cl;
 	private InicioSesion vis;
 	private Registrarse reg;
+	private Compra com;
 	
 	public ManejarPanel() {
 		iniciarComponentes();
@@ -21,9 +22,11 @@ public class ManejarPanel extends JPanel{
 		
 		vis = new InicioSesion();
 		reg = new Registrarse();
+		com = new Compra();
 		
 		this.add(vis, "vis");
 		this.add(reg, "reg");
+		this.add(com, "com");
 		
 	}
 	
@@ -53,6 +56,14 @@ public class ManejarPanel extends JPanel{
 
 	public void setReg(Registrarse reg) {
 		this.reg = reg;
+	}
+
+	public Compra getCom() {
+		return com;
+	}
+
+	public void setCom(Compra com) {
+		this.com = com;
 	}
 	
 		

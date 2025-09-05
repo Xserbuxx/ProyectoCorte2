@@ -16,14 +16,14 @@ public class Mascotas extends Producto {
 	}
 
 	public Mascotas(float precio, String nombre, String descripcion, int unidades, String rutaFoto, String tipoAnimal,
-			String tamaño) {
-		super(precio, nombre, descripcion, unidades, rutaFoto);
+			String tamaño,int id) {
+		super(precio, nombre, descripcion, unidades, rutaFoto,id);
 		this.tipoAnimal = tipoAnimal;
 		this.tamaño = tamaño;
 	}
 
-	public Mascotas(float precio, String nombre, String descripcion, int unidades, String rutaFoto) {
-		super(precio, nombre, descripcion, unidades, rutaFoto);
+	public Mascotas(float precio, String nombre, String descripcion, int unidades, String rutaFoto,int id) {
+		super(precio, nombre, descripcion, unidades, rutaFoto,id);
 		// TODO Auto-generated constructor stub
 	}
 

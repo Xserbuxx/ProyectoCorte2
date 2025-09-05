@@ -16,14 +16,14 @@ public class Juguetes extends Producto {
 	}
 
 	public Juguetes(float precio, String nombre, String descripcion, int unidades, String rutaFoto, int edadRecomendada,
-			String material) {
-		super(precio, nombre, descripcion, unidades, rutaFoto);
+			String material,int id) {
+		super(precio, nombre, descripcion, unidades, rutaFoto,id);
 		this.edadRecomendada = edadRecomendada;
 		this.material = material;
 	}
 
-	public Juguetes(float precio, String nombre, String descripcion, int unidades, String rutaFoto) {
-		super(precio, nombre, descripcion, unidades, rutaFoto);
+	public Juguetes(float precio, String nombre, String descripcion, int unidades, String rutaFoto,int id) {
+		super(precio, nombre, descripcion, unidades, rutaFoto,id);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -6,18 +6,20 @@ public class Producto {
 	private String descripcion;
 	private int unidades;
 	private String rutaFoto;
+	private int id;
 
 	public Producto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Producto(float precio, String nombre, String descripcion, int unidades, String rutaFoto) {
+	public Producto(float precio, String nombre, String descripcion, int unidades, String rutaFoto,int id) {
 		super();
 		this.precio = precio;
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.unidades = unidades;
 		this.rutaFoto = rutaFoto;
+		this.id = id;
 	}
 
 	public float getPrecio() {
@@ -58,6 +60,14 @@ public class Producto {
 
 	public void setRutaFoto(String rutaFoto) {
 		this.rutaFoto = rutaFoto;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override

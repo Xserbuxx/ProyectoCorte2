@@ -8,12 +8,10 @@ import co.edu.unbosque.view.*;
 
 public class Controlador implements ActionListener{
 	
-	private Consola con;
 	private VentanaPrincipal vp;
 	private ModelFacade mf;
 	
 	public Controlador() {
-		con = new Consola();
 		mf = new ModelFacade();
 		vp = new VentanaPrincipal();
 	}
@@ -30,6 +28,9 @@ public class Controlador implements ActionListener{
 		
 		vp.getMp().getReg().getBotonInicioSesion().addActionListener(this);
 		vp.getMp().getReg().getBotonInicioSesion().setActionCommand("Boton Iniciar Sesion");
+		
+		vp.getMp().getVis().getBotonInicio().addActionListener(this);
+		vp.getMp().getVis().getBotonInicio().setActionCommand("Boton Inicio De Sesion");
 	}
 
 	@Override
@@ -42,6 +43,10 @@ public class Controlador implements ActionListener{
 			
 		case "Boton Iniciar Sesion":
 			vp.getMp().mostrarPanel("vis");
+			break;
+			
+		case "Boton Inicio De Sesion":
+			vp.getMp().mostrarPanel("com");
 			break;
 			
 		default:
