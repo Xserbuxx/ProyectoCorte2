@@ -45,8 +45,7 @@ public class InicioSesion extends JPanel{
 		botonInicio = new JButton("Iniciar Sesion");
 		botonInicio.setBounds(450, 530, 380, 50);
 		botonInicio.setFont(new Font("Arial", Font.BOLD, 25));
-		Color azul = new Color(52,131,250);
-		botonInicio.setBackground(azul);
+		botonInicio.setBackground(new Color(52,131,250));
 		botonInicio.setForeground(Color.WHITE);
 		botonInicio.setFocusPainted(false);
 		
