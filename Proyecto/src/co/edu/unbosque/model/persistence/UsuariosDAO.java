@@ -10,11 +10,13 @@ public class UsuariosDAO implements DAO<Usuario> {
 
 	public UsuariosDAO() {
 		lista = new ArrayList<>();
+		LeerArchivoTexto("Usuarios.csv");
 	}
 
 	@Override
 	public void crear(Usuario nuevoDato) {
 		lista.add(nuevoDato);
+		actualizarlist();
 	}
 
 	@Override
@@ -57,5 +59,61 @@ public class UsuariosDAO implements DAO<Usuario> {
 	public int contar() {
 		return lista.size();
 	}
+	
+	public void LeerArchivoTexto(String url) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			String[] columnas = filas[i].split(";");
+			Usuario temp = new Usuario();
+			temp.setNickname(columnas[0]);
+			temp.setContraseña(columnas[1]);
 
+			lista.add(temp);
+		}
+	}
+	
+	public void actualizarlist() {
+		contenido = "";
+
+		lista.forEach((usuario) -> {
+			contenido += usuario.getNickname()+";"+usuario.getContraseña()+"\n";
+		});
+
+		escribirEnArchivoTexto("Usuarios.csv", contenido);
+	}
+	
+	public void escribirEnArchivoTexto(String url, String contenido) {
+		FileHandler.escribirEnArchivoTexto(url, contenido);
+	}
+
+	public ArrayList<Usuario> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Usuario> lista) {
+		this.lista = lista;
+	}
+
+	public String getContenido() {
+		return contenido;
+	}
+
+	public void setContenido(String contenido) {
+		this.contenido = contenido;
+	}
+
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+	
 }

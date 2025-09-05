@@ -63,6 +63,9 @@ public class Compra extends JPanel {
 	
 	public void mostrarProductos(String nombre, float precio, String ruta, int id, ActionListener e) {
 		panelProductos.add(new ProductoPanel(nombre, precio, ruta, id, e));
+	}
+	
+	public void mostrarScroll() {
 		scroll = new JScrollPane(panelProductos, JScrollPane.VERTICAL_SCROLLBAR_NEVER,
 				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
