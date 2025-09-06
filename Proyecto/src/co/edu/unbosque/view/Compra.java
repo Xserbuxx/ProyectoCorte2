@@ -13,10 +13,11 @@ import javax.swing.JScrollPane;
 
 public class Compra extends JPanel {
 
-	private JComboBox<String> Categorias;
+	private JComboBox<String> categorias;
 	private JScrollPane scroll;
 	private JPanel panelProductos;
 	private JButton cambiarModo;
+	private JButton cerrarSesion;
 
 	public Compra() {
 		iniciarComponente();
@@ -31,7 +32,7 @@ public class Compra extends JPanel {
 		arriba.setBackground(Color.YELLOW);
 		
 		cambiarModo = new JButton("Vender");
-		cambiarModo.setBounds(850, 25, 250, 50);
+		cambiarModo.setBounds(650, 25, 250, 50);
 		cambiarModo.setFont(new Font("Arial", Font.BOLD, 20));
 		cambiarModo.setBackground(new Color(52,131,250));
 		cambiarModo.setForeground(Color.WHITE);
@@ -39,17 +40,25 @@ public class Compra extends JPanel {
 
 		String[] cate = { "Todo", "Belleza", "Deportes", "Hogar", "Juguetes", "Libros", "Mascotas", "Musica", "Ropa",
 				"Tecnologia", "Vehiculos" };
-		Categorias = new JComboBox<>(cate);
-		Categorias.setBounds(320, 41, 200, 20);
-		Categorias.setBackground(Color.YELLOW);
+		categorias = new JComboBox<>(cate);
+		categorias.setBounds(320, 41, 200, 20);
+		categorias.setBackground(Color.YELLOW);
 
 		panelProductos = new JPanel();
 		panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.X_AXIS));
+		
+		cerrarSesion = new JButton("Cerrar Sesion");
+		cerrarSesion.setBounds(950, 25, 250, 50);
+		cerrarSesion.setFont(new Font("Arial", Font.BOLD, 20));
+		cerrarSesion.setBackground(Color.red.brighter());
+		cerrarSesion.setForeground(Color.WHITE);
+		cerrarSesion.setFocusPainted(false);
 
 		crearLabel("Categoria:", 200, 0, 100, 100, Color.BLACK, 20);
 		
+		this.add(cerrarSesion);
 		this.add(cambiarModo);
-		this.add(Categorias);
+		this.add(categorias);
 		this.add(arriba);
 	}
 
@@ -74,11 +83,11 @@ public class Compra extends JPanel {
 	}
 
 	public JComboBox<String> getCategorias() {
-		return Categorias;
+		return categorias;
 	}
 
 	public void setCategorias(JComboBox<String> categorias) {
-		Categorias = categorias;
+		categorias = categorias;
 	}
 
 	public JScrollPane getScroll() {
@@ -103,6 +112,14 @@ public class Compra extends JPanel {
 
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
+	}
+
+	public JButton getCerrarSesion() {
+		return cerrarSesion;
+	}
+
+	public void setCerrarSesion(JButton cerrarSesion) {
+		this.cerrarSesion = cerrarSesion;
 	}
 	
 

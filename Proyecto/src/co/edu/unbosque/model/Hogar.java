@@ -1,7 +1,8 @@
 package co.edu.unbosque.model;
 
 public class Hogar extends Producto {
-
+	
+	//arreglar mayuscula
 	private String Material;
 	private String dimensiones;
 

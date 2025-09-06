@@ -43,8 +43,17 @@ public class Controlador implements ActionListener {
 		vp.getMp().getVen().getCambiarModo().addActionListener(this);
 		vp.getMp().getVen().getCambiarModo().setActionCommand("Boton Cambiar Modo Compra");
 		
-		agregarProductos();
+		vp.getMp().getVen().getCerrarSesion().addActionListener(this);
+		vp.getMp().getVen().getCerrarSesion().setActionCommand("Boton Cerrar Sesion");
 		
+		vp.getMp().getCom().getCerrarSesion().addActionListener(this);
+		vp.getMp().getCom().getCerrarSesion().setActionCommand("Boton Cerrar Sesion");
+		
+		vp.getMp().getVen().getCategorias().addActionListener(this);
+		vp.getMp().getVen().getCategorias().setActionCommand("ComboBox_vender");
+
+		agregarProductos();
+
 	}
 
 	@Override
@@ -78,12 +87,12 @@ public class Controlador implements ActionListener {
 						JOptionPane.showMessageDialog(vp, "inicio correcto");
 						vp.getMp().mostrarPanel("com");
 						break mainloop;
-					}
-					else {
-						JOptionPane.showMessageDialog(vp, "usuario no existe");
-						break mainloop;
+
 					}
 				}
+
+				JOptionPane.showMessageDialog(vp, "usuario no existe");
+				break mainloop;
 			}
 			break;
 		case "Boton Registro":
@@ -114,50 +123,171 @@ public class Controlador implements ActionListener {
 			vp.revalidate();
 			vp.repaint();
 			break;
+		case "Boton Cerrar Sesion":
+			vp.getMp().mostrarPanel("vis");
+			vp.getMp().getVis().getUsuario().setText("");
+			vp.getMp().getVis().getContraseña().setText("");
+			vp.getMp().getReg().getUsuario().setText("");
+			vp.getMp().getReg().getContraseña().setText("");
+			break;
+		case "ComboBox_vender":
+			
+			///////////////////////////////////////////////////////////////////////////////
+	
+			String selec = (String) vp.getMp().getVen().getCategorias().getSelectedItem();
+			
+			switch (selec) {
+			
+			case "Seleccione":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				break;
+			
+			case "Belleza":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarBelleza();
+				break;
+				
+			case "Deportes":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarDeportes();
+				break;
+				
+			case "Hogar":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarHogar();
+				break;
+				
+			case "Juguetes":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarJuguetes();
+				break;
+				
+			case "Libros":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarLibros();
+				break;
+				
+			case "Mascotas":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarMascotas();
+				break;
+				
+			case "Musica":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarMusica();
+				break;
+				
+			case "Ropa":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarRopa();
+				break;
+				
+			case "Tecnologia":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarTecnologia();
+				break;
+				
+			case "Vehiculos":
+				vp.getMp().getVen().limpiarLabels();
+				vp.getMp().getVen().limpiarCampos();
+				
+				vp.getMp().getVen().iniciarLabels();
+				vp.getMp().getVen().mostrarVehiculos();
+				break;
+
+			default:
+				break;
+			}
+			
+			//////////////////////////////////////////////////////////////////////////////
+			
+			vp.revalidate();
+			vp.repaint();
+			
+			break;
 		default:
 			break;
 		}
+
 	}
-	
+
 	private void agregarProductos() {
 		mf.getBeDAO().getLista().forEach((belleza) -> {
-			vp.getMp().getCom().mostrarProductos(belleza.getNombre(), belleza.getPrecio(), belleza.getRutaFoto(), belleza.getId(), this);
+			vp.getMp().getCom().mostrarProductos(belleza.getNombre(), belleza.getPrecio(), belleza.getRutaFoto(),
+					belleza.getId(), this);
 		});
-		
+
 		mf.getDeDAO().getLista().forEach((deporte) -> {
-			vp.getMp().getCom().mostrarProductos(deporte.getNombre(), deporte.getPrecio(), deporte.getRutaFoto(), deporte.getId(), this);
+			vp.getMp().getCom().mostrarProductos(deporte.getNombre(), deporte.getPrecio(), deporte.getRutaFoto(),
+					deporte.getId(), this);
 		});
-		
+
 		mf.getHoDAO().getLista().forEach((hogar) -> {
-			vp.getMp().getCom().mostrarProductos(hogar.getNombre(), hogar.getPrecio(), hogar.getRutaFoto(), hogar.getId(), this);
+			vp.getMp().getCom().mostrarProductos(hogar.getNombre(), hogar.getPrecio(), hogar.getRutaFoto(),
+					hogar.getId(), this);
 		});
-		
+
 		mf.getJuDAO().getLista().forEach((juguete) -> {
-			vp.getMp().getCom().mostrarProductos(juguete.getNombre(), juguete.getPrecio(), juguete.getRutaFoto(), juguete.getId(), this);
+			vp.getMp().getCom().mostrarProductos(juguete.getNombre(), juguete.getPrecio(), juguete.getRutaFoto(),
+					juguete.getId(), this);
 		});
-		
+
 		mf.getLiDAO().getLista().forEach((libro) -> {
-			vp.getMp().getCom().mostrarProductos(libro.getNombre(), libro.getPrecio(), libro.getRutaFoto(), libro.getId(), this);
+			vp.getMp().getCom().mostrarProductos(libro.getNombre(), libro.getPrecio(), libro.getRutaFoto(),
+					libro.getId(), this);
 		});
-		
+
 		mf.getMaDAO().getLista().forEach((mascota) -> {
-			vp.getMp().getCom().mostrarProductos(mascota.getNombre(), mascota.getPrecio(), mascota.getRutaFoto(), mascota.getId(), this);
+			vp.getMp().getCom().mostrarProductos(mascota.getNombre(), mascota.getPrecio(), mascota.getRutaFoto(),
+					mascota.getId(), this);
 		});
-		
+
 		mf.getMuDAO().getLista().forEach((musica) -> {
-			vp.getMp().getCom().mostrarProductos(musica.getNombre(), musica.getPrecio(), musica.getRutaFoto(), musica.getId(), this);
+			vp.getMp().getCom().mostrarProductos(musica.getNombre(), musica.getPrecio(), musica.getRutaFoto(),
+					musica.getId(), this);
 		});
-		
+
 		mf.getRoDAO().getLista().forEach((ropa) -> {
-			vp.getMp().getCom().mostrarProductos(ropa.getNombre(), ropa.getPrecio(), ropa.getRutaFoto(), ropa.getId(), this);
+			vp.getMp().getCom().mostrarProductos(ropa.getNombre(), ropa.getPrecio(), ropa.getRutaFoto(), ropa.getId(),
+					this);
 		});
-		
+
 		mf.getTeDAO().getLista().forEach((tecnologia) -> {
-			vp.getMp().getCom().mostrarProductos(tecnologia.getNombre(), tecnologia.getPrecio(), tecnologia.getRutaFoto(), tecnologia.getId(), this);
+			vp.getMp().getCom().mostrarProductos(tecnologia.getNombre(), tecnologia.getPrecio(),
+					tecnologia.getRutaFoto(), tecnologia.getId(), this);
 		});
-		
+
 		mf.getVeDAO().getLista().forEach((vehiculo) -> {
-			vp.getMp().getCom().mostrarProductos(vehiculo.getNombre(), vehiculo.getPrecio(), vehiculo.getRutaFoto(), vehiculo.getId(), this);
+			vp.getMp().getCom().mostrarProductos(vehiculo.getNombre(), vehiculo.getPrecio(), vehiculo.getRutaFoto(),
+					vehiculo.getId(), this);
 		});
 	}
 
