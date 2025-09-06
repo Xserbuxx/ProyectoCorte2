@@ -6,7 +6,6 @@ public class ModelFacade {
 
 	private UsuariosDAO usDAO;
 	private BellezaDAO beDAO;
-	private CarritoDAO caDAO;
 	private DeportesDAO deDAO;
 	private HogarDAO hoDAO;
 	private JuguetesDAO juDAO;
@@ -16,12 +15,10 @@ public class ModelFacade {
 	private RopaDAO roDAO;
 	private TecnologiaDAO teDAO;
 	private VehiculosDAO veDAO;
-	private ProductosDAO prDAO;
 
 	public ModelFacade() {
 		usDAO = new UsuariosDAO();
 		beDAO = new BellezaDAO();
-		caDAO = new CarritoDAO();
 		deDAO = new DeportesDAO();
 		hoDAO = new HogarDAO();
 		juDAO = new JuguetesDAO();
@@ -31,12 +28,6 @@ public class ModelFacade {
 		roDAO = new RopaDAO();
 		teDAO = new TecnologiaDAO();
 		veDAO = new VehiculosDAO();
-		prDAO = new ProductosDAO();
-		añadirListas();
-	}
-	
-	private void añadirListas() {
-		prDAO.getLista().addAll(teDAO.getLista());
 	}
 	
 	public UsuariosDAO getUsDAO() {
@@ -53,14 +44,6 @@ public class ModelFacade {
 
 	public void setBeDAO(BellezaDAO beDAO) {
 		this.beDAO = beDAO;
-	}
-
-	public CarritoDAO getCaDAO() {
-		return caDAO;
-	}
-
-	public void setCaDAO(CarritoDAO caDAO) {
-		this.caDAO = caDAO;
 	}
 
 	public DeportesDAO getDeDAO() {
@@ -133,14 +116,6 @@ public class ModelFacade {
 
 	public void setVeDAO(VehiculosDAO veDAO) {
 		this.veDAO = veDAO;
-	}
-
-	public ProductosDAO getPrDAO() {
-		return prDAO;
-	}
-
-	public void setPrDAO(ProductosDAO prDAO) {
-		this.prDAO = prDAO;
 	}
 	
 }

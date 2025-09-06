@@ -1,7 +1,6 @@
 package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
-
 import co.edu.unbosque.model.Libros;
 
 public class LibrosDAO implements DAO<Libros> {
@@ -10,11 +9,13 @@ public class LibrosDAO implements DAO<Libros> {
 
 	public LibrosDAO() {
 		lista = new ArrayList<>();
+		LeerArchivoTexto("Libros.csv");
 	}
 
 	@Override
 	public void crear(Libros nuevoDato) {
 		lista.add(nuevoDato);
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -23,6 +24,7 @@ public class LibrosDAO implements DAO<Libros> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -33,6 +35,7 @@ public class LibrosDAO implements DAO<Libros> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -57,5 +60,53 @@ public class LibrosDAO implements DAO<Libros> {
 	public int contar() {
 		return lista.size();
 	}
+	public void LeerArchivoTexto(String url) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			String[] columnas = filas[i].split(";");
+			Libros temp = new Libros();
+			temp.setPrecio(Float.parseFloat(columnas[0]));
+			temp.setNombre(columnas[1]);
+			temp.setDescripcion(columnas[2]);
+			temp.setUnidades(Integer.parseInt(columnas[3]));
+			temp.setRutaFoto(columnas[4]);
+			temp.setId(Integer.parseInt(columnas[5]));
+			temp.setAutor(columnas[6]);
+			temp.setNumeroPaginas(Integer.parseInt(columnas[7]));
 
+			lista.add(temp);
+		}
+	}
+	
+	public void escribirEnArchivoTexto() {
+		contenido = "";
+
+		lista.forEach((libros) -> {
+			contenido += libros.getPrecio()+";"
+						+libros.getNombre()+";"
+						+libros.getDescripcion()+";"
+						+libros.getUnidades()+";"
+						+libros.getRutaFoto()+";"
+						+libros.getId()+";"
+						+libros.getAutor()+";"
+						+libros.getNumeroPaginas()+"\n";
+		});
+		
+		FileHandler.escribirEnArchivoTexto("Libros.csv", contenido);
+	}
+
+	public ArrayList<Libros> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Libros> lista) {
+		this.lista = lista;
+	}
+	
 }

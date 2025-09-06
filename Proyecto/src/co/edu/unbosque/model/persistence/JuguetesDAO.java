@@ -10,11 +10,13 @@ public class JuguetesDAO implements DAO<Juguetes> {
 
 	public JuguetesDAO() {
 		lista = new ArrayList<>();
+		LeerArchivoTexto("Juguetes.csv");
 	}
 
 	@Override
 	public void crear(Juguetes nuevoDato) {
 		lista.add(nuevoDato);
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -23,6 +25,7 @@ public class JuguetesDAO implements DAO<Juguetes> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -33,6 +36,7 @@ public class JuguetesDAO implements DAO<Juguetes> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -57,5 +61,54 @@ public class JuguetesDAO implements DAO<Juguetes> {
 	public int contar() {
 		return lista.size();
 	}
+	
+	public void LeerArchivoTexto(String url) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			String[] columnas = filas[i].split(";");
+			Juguetes temp = new Juguetes();
+			temp.setPrecio(Float.parseFloat(columnas[0]));
+			temp.setNombre(columnas[1]);
+			temp.setDescripcion(columnas[2]);
+			temp.setUnidades(Integer.parseInt(columnas[3]));
+			temp.setRutaFoto(columnas[4]);
+			temp.setId(Integer.parseInt(columnas[5]));
+			temp.setEdadRecomendada(Integer.parseInt(columnas[6]));
+			temp.setMaterial(columnas[7]);
 
+			lista.add(temp);
+		}
+	}
+	
+	public void escribirEnArchivoTexto() {
+		contenido = "";
+
+		lista.forEach((juguetes) -> {
+			contenido += juguetes.getPrecio()+";"
+						+juguetes.getNombre()+";"
+						+juguetes.getDescripcion()+";"
+						+juguetes.getUnidades()+";"
+						+juguetes.getRutaFoto()+";"
+						+juguetes.getId()+";"
+						+juguetes.getEdadRecomendada()+";"
+						+juguetes.getMaterial()+"\n";
+		});
+		
+		FileHandler.escribirEnArchivoTexto("Juguetes.csv", contenido);
+	}
+
+	public ArrayList<Juguetes> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Juguetes> lista) {
+		this.lista = lista;
+	}
+	
 }

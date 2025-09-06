@@ -2,7 +2,6 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-import co.edu.unbosque.model.Producto;
 import co.edu.unbosque.model.Tecnologia;
 
 public class TecnologiaDAO implements DAO<Tecnologia> {
@@ -11,12 +10,13 @@ public class TecnologiaDAO implements DAO<Tecnologia> {
 
 	public TecnologiaDAO() {
 		lista = new ArrayList<>();
-		LeerArchivoTexto("Productos.csv");
+		LeerArchivoTexto("Tecnologia.csv");
 	}
 
 	@Override
 	public void crear(Tecnologia nuevoDato) {
 		lista.add(nuevoDato);
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -25,6 +25,7 @@ public class TecnologiaDAO implements DAO<Tecnologia> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -35,6 +36,7 @@ public class TecnologiaDAO implements DAO<Tecnologia> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -71,16 +73,34 @@ public class TecnologiaDAO implements DAO<Tecnologia> {
 			}
 			String[] columnas = filas[i].split(";");
 			Tecnologia temp = new Tecnologia();
-			temp.setPrecio(Integer.parseInt(columnas[0]));
+			temp.setPrecio(Float.parseFloat(columnas[0]));
 			temp.setNombre(columnas[1]);
 			temp.setDescripcion(columnas[2]);
 			temp.setUnidades(Integer.parseInt(columnas[3]));
 			temp.setRutaFoto(columnas[4]);
-			temp.setId(Integer.parseInt(columnas[5]));	
+			temp.setId(Integer.parseInt(columnas[5]));
 			temp.setMarca(columnas[6]);
 			temp.setModelo(columnas[7]);
+
 			lista.add(temp);
 		}
+	}
+	
+	public void escribirEnArchivoTexto() {
+		contenido = "";
+
+		lista.forEach((tecnologia) -> {
+			contenido += tecnologia.getPrecio()+";"
+						+tecnologia.getNombre()+";"
+						+tecnologia.getDescripcion()+";"
+						+tecnologia.getUnidades()+";"
+						+tecnologia.getRutaFoto()+";"
+						+tecnologia.getId()+";"
+						+tecnologia.getMarca()+";"
+						+tecnologia.getModelo()+"\n";
+		});
+		
+		FileHandler.escribirEnArchivoTexto("Tecnologia.csv", contenido);
 	}
 
 	public ArrayList<Tecnologia> getLista() {
@@ -89,22 +109,5 @@ public class TecnologiaDAO implements DAO<Tecnologia> {
 
 	public void setLista(ArrayList<Tecnologia> lista) {
 		this.lista = lista;
-	}
-
-	public String getContenido() {
-		return contenido;
-	}
-
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
-	}
-	
+	}	
 }

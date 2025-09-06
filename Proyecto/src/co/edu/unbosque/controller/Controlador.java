@@ -2,11 +2,8 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JOptionPane;
-
 import co.edu.unbosque.model.ModelFacade;
-import co.edu.unbosque.model.Producto;
 import co.edu.unbosque.model.Usuario;
 import co.edu.unbosque.view.*;
 
@@ -45,11 +42,6 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getVen().getCambiarModo().addActionListener(this);
 		vp.getMp().getVen().getCambiarModo().setActionCommand("Boton Cambiar Modo Compra");
-
-		for (Producto producto : mf.getPrDAO().getLista()) {
-			vp.getMp().getCom().mostrarProductos(producto.getNombre(), producto.getPrecio(), producto.getRutaFoto(),
-					producto.getId(), this);
-		}
 
 	}
 

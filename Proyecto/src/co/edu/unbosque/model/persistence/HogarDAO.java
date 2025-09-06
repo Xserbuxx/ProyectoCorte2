@@ -10,11 +10,13 @@ public class HogarDAO implements DAO<Hogar> {
 
 	public HogarDAO() {
 		lista = new ArrayList<>();
+		LeerArchivoTexto("Hogar.csv");
 	}
 
 	@Override
 	public void crear(Hogar nuevoDato) {
 		lista.add(nuevoDato);
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -23,6 +25,7 @@ public class HogarDAO implements DAO<Hogar> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -33,6 +36,7 @@ public class HogarDAO implements DAO<Hogar> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -57,5 +61,53 @@ public class HogarDAO implements DAO<Hogar> {
 	public int contar() {
 		return lista.size();
 	}
+	public void LeerArchivoTexto(String url) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			String[] columnas = filas[i].split(";");
+			Hogar temp = new Hogar();
+			temp.setPrecio(Float.parseFloat(columnas[0]));
+			temp.setNombre(columnas[1]);
+			temp.setDescripcion(columnas[2]);
+			temp.setUnidades(Integer.parseInt(columnas[3]));
+			temp.setRutaFoto(columnas[4]);
+			temp.setId(Integer.parseInt(columnas[5]));
+			temp.setMaterial(columnas[6]);
+			temp.setDimensiones(columnas[7]);
 
+			lista.add(temp);
+		}
+	}
+	
+	public void escribirEnArchivoTexto() {
+		contenido = "";
+
+		lista.forEach((belleza) -> {
+			contenido += belleza.getPrecio()+";"
+						+belleza.getNombre()+";"
+						+belleza.getDescripcion()+";"
+						+belleza.getUnidades()+";"
+						+belleza.getRutaFoto()+";"
+						+belleza.getId()+";"
+						+belleza.getMaterial()+";"
+						+belleza.getDimensiones()+"\n";
+		});
+		
+		FileHandler.escribirEnArchivoTexto("Hogar.csv", contenido);
+	}
+
+	public ArrayList<Hogar> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Hogar> lista) {
+		this.lista = lista;
+	}
+	
 }

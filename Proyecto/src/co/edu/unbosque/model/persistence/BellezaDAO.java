@@ -11,11 +11,13 @@ public class BellezaDAO implements DAO<Belleza> {
 
 	public BellezaDAO() {
 		lista = new ArrayList<>();
+		LeerArchivoTexto("Belleza.csv");
 	}
 
 	@Override
 	public void crear(Belleza nuevoDato) {
 		lista.add(nuevoDato);
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -24,6 +26,7 @@ public class BellezaDAO implements DAO<Belleza> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -34,6 +37,7 @@ public class BellezaDAO implements DAO<Belleza> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -58,5 +62,54 @@ public class BellezaDAO implements DAO<Belleza> {
 	public int contar() {
 		return lista.size();
 	}
+	
+	public void LeerArchivoTexto(String url) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			String[] columnas = filas[i].split(";");
+			Belleza temp = new Belleza();
+			temp.setPrecio(Float.parseFloat(columnas[0]));
+			temp.setNombre(columnas[1]);
+			temp.setDescripcion(columnas[2]);
+			temp.setUnidades(Integer.parseInt(columnas[3]));
+			temp.setRutaFoto(columnas[4]);
+			temp.setId(Integer.parseInt(columnas[5]));
+			temp.setTipoProducto(columnas[6]);
+			temp.setFechaExpiracion(columnas[7]);
 
+			lista.add(temp);
+		}
+	}
+	
+	public void escribirEnArchivoTexto() {
+		contenido = "";
+
+		lista.forEach((belleza) -> {
+			contenido += belleza.getPrecio()+";"
+						+belleza.getNombre()+";"
+						+belleza.getDescripcion()+";"
+						+belleza.getUnidades()+";"
+						+belleza.getRutaFoto()+";"
+						+belleza.getId()+";"
+						+belleza.getTipoProducto()+";"
+						+belleza.getFechaExpiracion()+"\n";
+		});
+		
+		FileHandler.escribirEnArchivoTexto("Belleza.csv", contenido);
+	}
+
+	public ArrayList<Belleza> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<Belleza> lista) {
+		this.lista = lista;
+	}
+	
 }

@@ -16,7 +16,7 @@ public class UsuariosDAO implements DAO<Usuario> {
 	@Override
 	public void crear(Usuario nuevoDato) {
 		lista.add(nuevoDato);
-		actualizarlist();
+		escribirEnArchivoTexto();
 	}
 
 	@Override
@@ -25,6 +25,7 @@ public class UsuariosDAO implements DAO<Usuario> {
 			return false;
 		} else {
 			lista.set(indice, actualizarDato);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -35,6 +36,7 @@ public class UsuariosDAO implements DAO<Usuario> {
 			return false;
 		} else {
 			lista.remove(indice);
+			escribirEnArchivoTexto();
 			return true;
 		}
 	}
@@ -78,18 +80,15 @@ public class UsuariosDAO implements DAO<Usuario> {
 		}
 	}
 	
-	public void actualizarlist() {
+	public void escribirEnArchivoTexto() {
 		contenido = "";
 
 		lista.forEach((usuario) -> {
-			contenido += usuario.getNickname()+";"+usuario.getContraseña()+"\n";
+			contenido += usuario.getNickname()+";"
+						+usuario.getContraseña()+"\n";
 		});
-
-		escribirEnArchivoTexto("Usuarios.csv", contenido);
-	}
-	
-	public void escribirEnArchivoTexto(String url, String contenido) {
-		FileHandler.escribirEnArchivoTexto(url, contenido);
+		
+		FileHandler.escribirEnArchivoTexto("Usuarios.csv", contenido);
 	}
 
 	public ArrayList<Usuario> getLista() {
@@ -99,21 +98,4 @@ public class UsuariosDAO implements DAO<Usuario> {
 	public void setLista(ArrayList<Usuario> lista) {
 		this.lista = lista;
 	}
-
-	public String getContenido() {
-		return contenido;
-	}
-
-	public void setContenido(String contenido) {
-		this.contenido = contenido;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public void setN(int n) {
-		this.n = n;
-	}
-	
 }
