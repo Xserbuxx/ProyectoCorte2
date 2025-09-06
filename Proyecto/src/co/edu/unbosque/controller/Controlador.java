@@ -42,7 +42,9 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getVen().getCambiarModo().addActionListener(this);
 		vp.getMp().getVen().getCambiarModo().setActionCommand("Boton Cambiar Modo Compra");
-
+		
+		agregarProductos();
+		
 	}
 
 	@Override
@@ -115,6 +117,48 @@ public class Controlador implements ActionListener {
 		default:
 			break;
 		}
+	}
+	
+	private void agregarProductos() {
+		mf.getBeDAO().getLista().forEach((belleza) -> {
+			vp.getMp().getCom().mostrarProductos(belleza.getNombre(), belleza.getPrecio(), belleza.getRutaFoto(), belleza.getId(), this);
+		});
+		
+		mf.getDeDAO().getLista().forEach((deporte) -> {
+			vp.getMp().getCom().mostrarProductos(deporte.getNombre(), deporte.getPrecio(), deporte.getRutaFoto(), deporte.getId(), this);
+		});
+		
+		mf.getHoDAO().getLista().forEach((hogar) -> {
+			vp.getMp().getCom().mostrarProductos(hogar.getNombre(), hogar.getPrecio(), hogar.getRutaFoto(), hogar.getId(), this);
+		});
+		
+		mf.getJuDAO().getLista().forEach((juguete) -> {
+			vp.getMp().getCom().mostrarProductos(juguete.getNombre(), juguete.getPrecio(), juguete.getRutaFoto(), juguete.getId(), this);
+		});
+		
+		mf.getLiDAO().getLista().forEach((libro) -> {
+			vp.getMp().getCom().mostrarProductos(libro.getNombre(), libro.getPrecio(), libro.getRutaFoto(), libro.getId(), this);
+		});
+		
+		mf.getMaDAO().getLista().forEach((mascota) -> {
+			vp.getMp().getCom().mostrarProductos(mascota.getNombre(), mascota.getPrecio(), mascota.getRutaFoto(), mascota.getId(), this);
+		});
+		
+		mf.getMuDAO().getLista().forEach((musica) -> {
+			vp.getMp().getCom().mostrarProductos(musica.getNombre(), musica.getPrecio(), musica.getRutaFoto(), musica.getId(), this);
+		});
+		
+		mf.getRoDAO().getLista().forEach((ropa) -> {
+			vp.getMp().getCom().mostrarProductos(ropa.getNombre(), ropa.getPrecio(), ropa.getRutaFoto(), ropa.getId(), this);
+		});
+		
+		mf.getTeDAO().getLista().forEach((tecnologia) -> {
+			vp.getMp().getCom().mostrarProductos(tecnologia.getNombre(), tecnologia.getPrecio(), tecnologia.getRutaFoto(), tecnologia.getId(), this);
+		});
+		
+		mf.getVeDAO().getLista().forEach((vehiculo) -> {
+			vp.getMp().getCom().mostrarProductos(vehiculo.getNombre(), vehiculo.getPrecio(), vehiculo.getRutaFoto(), vehiculo.getId(), this);
+		});
 	}
 
 }

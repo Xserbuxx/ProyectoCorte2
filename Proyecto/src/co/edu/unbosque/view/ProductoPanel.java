@@ -43,7 +43,10 @@ public class ProductoPanel extends JPanel{
 		info = new JButton();
 		info.setActionCommand("Producto_"+id);
 		info.addActionListener(e);
-		info.setBounds(40, 500, 220, 50);
+		info.setBounds(0, 0, 300, 570);
+		info.setContentAreaFilled(false);
+		info.setBorderPainted(false);
+		info.setFocusPainted(false);
 		
 		this.add(info);
 		this.add(icono);
