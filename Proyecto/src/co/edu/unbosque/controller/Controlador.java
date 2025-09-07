@@ -3,8 +3,7 @@ package co.edu.unbosque.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-import co.edu.unbosque.model.ModelFacade;
-import co.edu.unbosque.model.Usuario;
+import co.edu.unbosque.model.*;
 import co.edu.unbosque.view.*;
 
 public class Controlador implements ActionListener {
@@ -42,15 +41,18 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getVen().getCambiarModo().addActionListener(this);
 		vp.getMp().getVen().getCambiarModo().setActionCommand("Boton Cambiar Modo Compra");
-		
+
 		vp.getMp().getVen().getCerrarSesion().addActionListener(this);
 		vp.getMp().getVen().getCerrarSesion().setActionCommand("Boton Cerrar Sesion");
-		
+
 		vp.getMp().getCom().getCerrarSesion().addActionListener(this);
 		vp.getMp().getCom().getCerrarSesion().setActionCommand("Boton Cerrar Sesion");
-		
+
 		vp.getMp().getVen().getCategorias().addActionListener(this);
 		vp.getMp().getVen().getCategorias().setActionCommand("ComboBox_vender");
+
+		vp.getMp().getVen().getRegistrarProducto().addActionListener(this);
+		vp.getMp().getVen().getRegistrarProducto().setActionCommand("Boton Registrar Producto");
 
 		agregarProductos();
 
@@ -82,6 +84,10 @@ public class Controlador implements ActionListener {
 				String usu = vp.getMp().getVis().getUsuario().getText();
 				String contra = vp.getMp().getVis().getContraseña().getText();
 				// cambiar joption pane por exception
+				if (usu == null || contra == null) {
+					JOptionPane.showMessageDialog(vp, "Digite un usuario o contraseña");
+					break mainloop;
+				}
 				for (Usuario usuario : mf.getUsDAO().getLista()) {
 					if (usu.equals(usuario.getNickname()) && contra.equals(usuario.getContraseña())) {
 						JOptionPane.showMessageDialog(vp, "inicio correcto");
@@ -114,6 +120,8 @@ public class Controlador implements ActionListener {
 			}
 			break;
 		case "Boton Cambiar Modo Compra":
+			vp.getMp().getCom().limpiarProductos();
+			agregarProductos();
 			vp.getMp().mostrarPanel("com");
 			vp.revalidate();
 			vp.repaint();
@@ -131,94 +139,94 @@ public class Controlador implements ActionListener {
 			vp.getMp().getReg().getContraseña().setText("");
 			break;
 		case "ComboBox_vender":
-			
+
 			///////////////////////////////////////////////////////////////////////////////
-	
+
 			String selec = (String) vp.getMp().getVen().getCategorias().getSelectedItem();
-			
+
 			switch (selec) {
-			
+
 			case "Seleccione":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
 				break;
-			
+
 			case "Belleza":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarBelleza();
 				break;
-				
+
 			case "Deportes":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarDeportes();
 				break;
-				
+
 			case "Hogar":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarHogar();
 				break;
-				
+
 			case "Juguetes":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarJuguetes();
 				break;
-				
+
 			case "Libros":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarLibros();
 				break;
-				
+
 			case "Mascotas":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarMascotas();
 				break;
-				
+
 			case "Musica":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarMusica();
 				break;
-				
+
 			case "Ropa":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarRopa();
 				break;
-				
+
 			case "Tecnologia":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarTecnologia();
 				break;
-				
+
 			case "Vehiculos":
 				vp.getMp().getVen().limpiarLabels();
 				vp.getMp().getVen().limpiarCampos();
-				
+
 				vp.getMp().getVen().iniciarLabels();
 				vp.getMp().getVen().mostrarVehiculos();
 				break;
@@ -226,12 +234,138 @@ public class Controlador implements ActionListener {
 			default:
 				break;
 			}
-			
+
 			//////////////////////////////////////////////////////////////////////////////
-			
+
 			vp.revalidate();
 			vp.repaint();
-			
+
+			break;
+
+		case "Boton Registrar Producto":
+			String selecc = (String) vp.getMp().getVen().getCategorias().getSelectedItem();
+
+			switch (selecc) {
+
+			case "Seleccione":
+
+				JOptionPane.showMessageDialog(vp, "Debe ingresar una categoria");
+
+				break;
+
+			case "Belleza":
+				mf.getBeDAO().crear(new Belleza(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getTipoProducto().getText(),
+						vp.getMp().getVen().getFechaExpiracion().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Deportes":
+				mf.getDeDAO().crear(new Deportes(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getTipoDeporte().getText(),
+						vp.getMp().getVen().getMaterialDe().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Hogar":
+				mf.getHoDAO().crear(new Hogar(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getTipoMaterial().getText(),
+						vp.getMp().getVen().getDimensiones().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Juguetes":
+				mf.getJuDAO().crear(new Juguetes(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getEdadRecomendada().getText()),
+						vp.getMp().getVen().getMaterialJu().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Libros":
+				mf.getLiDAO().crear(new Libros(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getAutor().getText(),
+						Integer.parseInt(vp.getMp().getVen().getNumeroPaginas().getText()), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Mascotas":
+				mf.getMaDAO().crear(new Mascotas(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getTipoAnimal().getText(),
+						vp.getMp().getVen().getTamaño().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Musica":
+				mf.getMuDAO().crear(new Musica(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getFormato().getText(),
+						vp.getMp().getVen().getArtista().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Ropa":
+				mf.getRoDAO().crear(new Ropa(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getTalla().getText(),
+						vp.getMp().getVen().getColor().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Tecnologia":
+				mf.getTeDAO().crear(new Tecnologia(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getMarca().getText(),
+						vp.getMp().getVen().getModeloTec().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			case "Vehiculos":
+				mf.getVeDAO().crear(new Vehiculos(Float.parseFloat(vp.getMp().getVen().getPrecio().getText()),
+						vp.getMp().getVen().getNombre().getText(), 
+						vp.getMp().getVen().getDescripcion().getText(),
+						Integer.parseInt(vp.getMp().getVen().getUnidades().getText()),
+						vp.getMp().getVen().getRutaFoto().getText(), 
+						vp.getMp().getVen().getAño().getText(),
+						vp.getMp().getVen().getModeloVE().getText(), 
+						Integer.parseInt(vp.getMp().getVen().getId().getText())));
+				break;
+
+			default:
+				break;
+			}
 			break;
 		default:
 			break;

@@ -21,6 +21,7 @@ public class Venta extends JPanel {
 	private JTextField unidades;
 	private JTextField rutaFoto;
 	private JTextField id;
+	private JButton registrarProducto;
 
 	// belleza
 	private JTextField tipoProducto;
@@ -78,6 +79,13 @@ public class Venta extends JPanel {
 		cerrarSesion.setBackground(Color.red.brighter());
 		cerrarSesion.setForeground(Color.WHITE);
 		cerrarSesion.setFocusPainted(false);
+		
+		registrarProducto = new JButton("Registrar Producto");
+		registrarProducto.setBounds(480, 550, 300, 50);
+		registrarProducto.setFont(new Font("Arial", Font.BOLD, 20));
+		registrarProducto.setBackground(Color.red.brighter());
+		registrarProducto.setForeground(Color.WHITE);
+		registrarProducto.setFocusPainted(false);
 
 		precio = new JTextField();
 		precio.setBounds(100, 150, 380, 50);
@@ -110,7 +118,8 @@ public class Venta extends JPanel {
 		categorias.setBackground(Color.YELLOW);
 
 		crearLabel("Categoria:", 200, 0, 100, 100, Color.BLACK, 20);
-
+		
+		this.add(registrarProducto);
 		this.add(precio);
 		this.add(nombre);
 		this.add(descripcion);
@@ -363,6 +372,14 @@ public class Venta extends JPanel {
 
 	public void setCerrarSesion(JButton cerrarSesion) {
 		this.cerrarSesion = cerrarSesion;
+	}
+
+	public JButton getRegistrarProducto() {
+		return registrarProducto;
+	}
+
+	public void setRegistrarProducto(JButton registrarProducto) {
+		this.registrarProducto = registrarProducto;
 	}
 
 	public JComboBox<String> getCategorias() {
