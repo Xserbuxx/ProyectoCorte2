@@ -10,6 +10,8 @@ public class Controlador implements ActionListener {
 
 	private VentanaPrincipal vp;
 	private ModelFacade mf;
+	private String usuarioActual;
+	Producto protemp;
 
 	public Controlador() {
 		mf = new ModelFacade();
@@ -53,6 +55,9 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getVen().getRegistrarProducto().addActionListener(this);
 		vp.getMp().getVen().getRegistrarProducto().setActionCommand("Boton Registrar Producto");
+		
+		vp.getMp().getPip().getVolver().addActionListener(this);
+		vp.getMp().getPip().getVolver().setActionCommand("Boton Cambiar Modo Compra");;
 
 		agregarProductos();
 
@@ -63,7 +68,14 @@ public class Controlador implements ActionListener {
 		String boton = e.getActionCommand();
 
 		if (boton.contains("Producto_")) {
-			JOptionPane.showMessageDialog(vp, boton);
+			vp.getMp().getPip().limpiarLabels();
+			vp.getMp().mostrarPanel("pip");
+			int id = Integer.parseInt(boton.split("_")[1]);
+			Producto producto = encontrarProducto(id);
+			String atributo1 = producto.toString().split(";")[6];
+			String atributo2 = producto.toString().split(";")[7];
+			
+			vp.getMp().getPip().mostrarProductoInfo(producto.getPrecio(), producto.getNombre(), producto.getDescripcion(), producto.getUnidades(), producto.getRutaFoto(), atributo1, atributo2);
 		}
 
 		switch (boton) {
@@ -90,7 +102,7 @@ public class Controlador implements ActionListener {
 				}
 				for (Usuario usuario : mf.getUsDAO().getLista()) {
 					if (usu.equals(usuario.getNickname()) && contra.equals(usuario.getContraseña())) {
-						JOptionPane.showMessageDialog(vp, "inicio correcto");
+						usuarioActual = usuario.getNickname();
 						vp.getMp().mostrarPanel("com");
 						break mainloop;
 
@@ -114,7 +126,7 @@ public class Controlador implements ActionListener {
 				}
 
 				mf.getUsDAO().crear(new Usuario(usu, contra));
-				JOptionPane.showMessageDialog(vp, "registreo ok");
+				usuarioActual = usu;
 				vp.getMp().mostrarPanel("com");
 				break mainloop;
 			}
@@ -243,6 +255,9 @@ public class Controlador implements ActionListener {
 			break;
 
 		case "Boton Registrar Producto":
+			
+			/////////////////////////////////////////////////////////////////////////////////
+			
 			String selecc = (String) vp.getMp().getVen().getCategorias().getSelectedItem();
 
 			switch (selecc) {
@@ -366,6 +381,12 @@ public class Controlador implements ActionListener {
 			default:
 				break;
 			}
+			
+			///////////////////////////////////////////////////////////////////
+			
+			vp.revalidate();
+			vp.repaint();
+			
 			break;
 		default:
 			break;
@@ -423,6 +444,17 @@ public class Controlador implements ActionListener {
 			vp.getMp().getCom().mostrarProductos(vehiculo.getNombre(), vehiculo.getPrecio(), vehiculo.getRutaFoto(),
 					vehiculo.getId(), this);
 		});
+	}
+	
+	private Producto encontrarProducto(int id){
+		mf.agregarProductos();
+		mf.getProductos().forEach((producto)->{
+			if(producto.getId() == id) {
+				protemp = new Producto();
+				protemp = producto;
+			}
+		});
+		return protemp;
 	}
 
 }

@@ -11,6 +11,7 @@ public class ManejarPanel extends JPanel{
 	private Registrarse reg;
 	private Compra com;
 	private Venta ven;
+	private ProductoInfoPanel pip;
 	
 	public ManejarPanel() {
 		iniciarComponentes();
@@ -25,11 +26,13 @@ public class ManejarPanel extends JPanel{
 		reg = new Registrarse();
 		com = new Compra();
 		ven = new Venta();
+		pip = new ProductoInfoPanel();
 		
 		this.add(vis, "vis");
 		this.add(reg, "reg");
 		this.add(com, "com");
 		this.add(ven, "ven");
+		this.add(pip, "pip");
 		
 	}
 	
@@ -75,6 +78,14 @@ public class ManejarPanel extends JPanel{
 
 	public void setVen(Venta ven) {
 		this.ven = ven;
+	}
+
+	public ProductoInfoPanel getPip() {
+		return pip;
+	}
+
+	public void setPip(ProductoInfoPanel pip) {
+		this.pip = pip;
 	}
 		
 }

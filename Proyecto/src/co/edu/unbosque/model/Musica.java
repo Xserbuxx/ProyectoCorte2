@@ -45,7 +45,7 @@ public class Musica extends Producto {
 
 	@Override
 	public String toString() {
-		return "Musica [formato=" + formato + ", artista=" + artista + "]";
+		return super.toString()+formato+";"+artista;
 	}
 
 }

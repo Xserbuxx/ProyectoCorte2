@@ -45,7 +45,7 @@ public class Deportes extends Producto {
 
 	@Override
 	public String toString() {
-		return "Deportes [tipoDeporte=" + tipoDeporte + ", material=" + material + "]";
+		return super.toString()+tipoDeporte+";"+material;
 	}
 
 }

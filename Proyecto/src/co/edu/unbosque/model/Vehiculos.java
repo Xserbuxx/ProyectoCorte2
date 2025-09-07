@@ -45,7 +45,7 @@ public class Vehiculos extends Producto {
 
 	@Override
 	public String toString() {
-		return "Vehiculos [Año=" + Año + ", modelo=" + modelo + "]";
+		return super.toString()+Año+";"+modelo;
 	}
 
 }

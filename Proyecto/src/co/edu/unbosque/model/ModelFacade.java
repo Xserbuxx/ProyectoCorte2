@@ -1,8 +1,12 @@
 package co.edu.unbosque.model;
 
+import java.util.ArrayList;
+
 import co.edu.unbosque.model.persistence.*;
 
 public class ModelFacade {
+	
+	private ArrayList<Producto> productos;
 
 	private UsuariosDAO usDAO;
 	private BellezaDAO beDAO;
@@ -28,6 +32,41 @@ public class ModelFacade {
 		roDAO = new RopaDAO();
 		teDAO = new TecnologiaDAO();
 		veDAO = new VehiculosDAO();
+		productos = new ArrayList<>();
+	}
+	
+	public void agregarProductos() {
+		productos.removeAll(productos);
+		beDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		deDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		hoDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		juDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		liDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		maDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		muDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		roDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		teDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
+		veDAO.getLista().forEach((producto)->{
+			productos.add(producto);
+		});
 	}
 	
 	public UsuariosDAO getUsDAO() {
@@ -116,6 +155,14 @@ public class ModelFacade {
 
 	public void setVeDAO(VehiculosDAO veDAO) {
 		this.veDAO = veDAO;
+	}
+
+	public ArrayList<Producto> getProductos() {
+		return productos;
+	}
+
+	public void setProductos(ArrayList<Producto> productos) {
+		this.productos = productos;
 	}
 	
 }
