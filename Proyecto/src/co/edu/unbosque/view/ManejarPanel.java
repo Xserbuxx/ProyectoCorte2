@@ -12,6 +12,8 @@ public class ManejarPanel extends JPanel{
 	private Compra com;
 	private Venta ven;
 	private ProductoInfoPanel pip;
+	private Carritos car;
+	private AgregarACarrito aca;
 	
 	public ManejarPanel() {
 		iniciarComponentes();
@@ -27,12 +29,15 @@ public class ManejarPanel extends JPanel{
 		com = new Compra();
 		ven = new Venta();
 		pip = new ProductoInfoPanel();
+		car = new Carritos();
+		aca = new AgregarACarrito();
 		
 		this.add(vis, "vis");
 		this.add(reg, "reg");
 		this.add(com, "com");
 		this.add(ven, "ven");
 		this.add(pip, "pip");
+		this.add(car, "car");
 		
 	}
 	
@@ -87,5 +92,21 @@ public class ManejarPanel extends JPanel{
 	public void setPip(ProductoInfoPanel pip) {
 		this.pip = pip;
 	}
-		
+
+	public Carritos getCar() {
+		return car;
+	}
+
+	public void setCar(Carritos car) {
+		this.car = car;
+	}
+
+	public AgregarACarrito getAca() {
+		return aca;
+	}
+
+	public void setAca(AgregarACarrito aca) {
+		this.aca = aca;
+	}
+	
 }

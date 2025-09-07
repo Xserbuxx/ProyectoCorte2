@@ -58,6 +58,12 @@ public class Controlador implements ActionListener {
 		
 		vp.getMp().getPip().getVolver().addActionListener(this);
 		vp.getMp().getPip().getVolver().setActionCommand("Boton Cambiar Modo Compra");;
+		
+		vp.getMp().getPip().getAgregarCarrito().addActionListener(this);
+		vp.getMp().getPip().getAgregarCarrito().setActionCommand("Boton Agregar Carrito");
+		
+		vp.getMp().getCar().getVolver().addActionListener(this);
+		vp.getMp().getCar().getVolver().setActionCommand("Boton Modo Compra");
 
 		agregarProductos();
 
@@ -76,6 +82,11 @@ public class Controlador implements ActionListener {
 			String atributo2 = producto.toString().split(";")[7];
 			
 			vp.getMp().getPip().mostrarProductoInfo(producto.getPrecio(), producto.getNombre(), producto.getDescripcion(), producto.getUnidades(), producto.getRutaFoto(), atributo1, atributo2);
+		}
+		
+		if (boton.contains("Carrito_")) {
+			int id = Integer.parseInt(boton.split("_")[1]);
+			JOptionPane.showMessageDialog(vp, id);
 		}
 
 		switch (boton) {
@@ -135,6 +146,8 @@ public class Controlador implements ActionListener {
 			vp.getMp().getCom().limpiarProductos();
 			agregarProductos();
 			vp.getMp().mostrarPanel("com");
+			vp.getMp().getAca().setEnabled(false);
+			vp.getMp().getAca().setVisible(false);
 			vp.revalidate();
 			vp.repaint();
 			break;
@@ -388,6 +401,20 @@ public class Controlador implements ActionListener {
 			vp.repaint();
 			
 			break;
+			
+		case "Boton Agregar Carrito":
+			vp.getMp().getAca().setVisible(true);
+			vp.getMp().getAca().setEnabled(true);
+			vp.getMp().getPip().add(vp.getMp().getAca());
+			agregarCarritos();
+			
+			vp.getMp().getPip().getVolver().setEnabled(false);
+			vp.getMp().getPip().getAgregarCarrito().setEnabled(false);
+			
+			vp.getMp().getPip().setComponentZOrder(vp.getMp().getAca(), 0);
+			vp.getMp().getPip().revalidate();
+			vp.getMp().getPip().repaint();
+			break;
 		default:
 			break;
 		}
@@ -444,6 +471,17 @@ public class Controlador implements ActionListener {
 			vp.getMp().getCom().mostrarProductos(vehiculo.getNombre(), vehiculo.getPrecio(), vehiculo.getRutaFoto(),
 					vehiculo.getId(), this);
 		});
+	}
+	
+	private void agregarCarritos() {
+		vp.getMp().getAca().mostrarProductos(0, this);
+		vp.getMp().getAca().mostrarProductos(1, this);
+		vp.getMp().getAca().mostrarProductos(2, this);
+		vp.getMp().getAca().mostrarProductos(3, this);
+		vp.getMp().getAca().mostrarProductos(4, this);
+		vp.getMp().getAca().mostrarProductos(5, this);
+		vp.getMp().getAca().getScroll().revalidate();
+		vp.getMp().getAca().getScroll().repaint();
 	}
 	
 	private Producto encontrarProducto(int id){
