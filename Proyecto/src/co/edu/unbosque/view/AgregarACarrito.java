@@ -39,8 +39,8 @@ public class AgregarACarrito extends JPanel {
 		this.add(arriba);
 	}
 	
-	public void mostrarProductos(int id, ActionListener e) {
-		panelProductos.add(new CarritoPanel(id, e));
+	public void mostrarProductos(String nombre, int id, ActionListener e) {
+		panelProductos.add(new CarritoPanel(nombre,id, e));
 	}
 	
 	public void limpiarProductos() {

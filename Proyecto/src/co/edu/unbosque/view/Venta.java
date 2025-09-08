@@ -67,14 +67,14 @@ public class Venta extends JPanel {
 		arriba.setBackground(Color.YELLOW);
 
 		cambiarModo = new JButton("Comprar");
-		cambiarModo.setBounds(650, 25, 250, 50);
+		cambiarModo.setBounds(720, 25, 220, 50);
 		cambiarModo.setFont(new Font("Arial", Font.BOLD, 20));
 		cambiarModo.setBackground(new Color(52, 131, 250));
 		cambiarModo.setForeground(Color.WHITE);
 		cambiarModo.setFocusPainted(false);
 
 		cerrarSesion = new JButton("Cerrar Sesion");
-		cerrarSesion.setBounds(950, 25, 250, 50);
+		cerrarSesion.setBounds(990, 25, 220, 50);
 		cerrarSesion.setFont(new Font("Arial", Font.BOLD, 20));
 		cerrarSesion.setBackground(Color.red.brighter());
 		cerrarSesion.setForeground(Color.WHITE);
@@ -114,10 +114,10 @@ public class Venta extends JPanel {
 		String[] cate = { "Seleccione", "Belleza", "Deportes", "Hogar", "Juguetes", "Libros", "Mascotas", "Musica", "Ropa",
 				"Tecnologia", "Vehiculos" };
 		categorias = new JComboBox<>(cate);
-		categorias.setBounds(320, 41, 200, 20);
+		categorias.setBounds(120, 41, 200, 20);
 		categorias.setBackground(Color.YELLOW);
 
-		crearLabel("Categoria:", 200, 0, 100, 100, Color.BLACK, 20);
+		crearLabel("Categoria:", 20, 0, 100, 100, Color.BLACK, 20);
 		
 		this.add(registrarProducto);
 		this.add(precio);

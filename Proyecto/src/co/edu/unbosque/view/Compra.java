@@ -18,6 +18,7 @@ public class Compra extends JPanel {
 	private JPanel panelProductos;
 	private JButton cambiarModo;
 	private JButton cerrarSesion;
+	private JButton carritos;
 
 	public Compra() {
 		iniciarComponente();
@@ -32,7 +33,7 @@ public class Compra extends JPanel {
 		arriba.setBackground(Color.YELLOW);
 		
 		cambiarModo = new JButton("Vender");
-		cambiarModo.setBounds(650, 25, 250, 50);
+		cambiarModo.setBounds(720, 25, 220, 50);
 		cambiarModo.setFont(new Font("Arial", Font.BOLD, 20));
 		cambiarModo.setBackground(new Color(52,131,250));
 		cambiarModo.setForeground(Color.WHITE);
@@ -41,21 +42,29 @@ public class Compra extends JPanel {
 		String[] cate = { "Todo", "Belleza", "Deportes", "Hogar", "Juguetes", "Libros", "Mascotas", "Musica", "Ropa",
 				"Tecnologia", "Vehiculos" };
 		categorias = new JComboBox<>(cate);
-		categorias.setBounds(320, 41, 200, 20);
+		categorias.setBounds(120, 41, 200, 20);
 		categorias.setBackground(Color.YELLOW);
 
 		panelProductos = new JPanel();
 		panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.X_AXIS));
 		
 		cerrarSesion = new JButton("Cerrar Sesion");
-		cerrarSesion.setBounds(950, 25, 250, 50);
+		cerrarSesion.setBounds(990, 25, 220, 50);
 		cerrarSesion.setFont(new Font("Arial", Font.BOLD, 20));
 		cerrarSesion.setBackground(Color.red.brighter());
 		cerrarSesion.setForeground(Color.WHITE);
 		cerrarSesion.setFocusPainted(false);
-
-		crearLabel("Categoria:", 200, 0, 100, 100, Color.BLACK, 20);
 		
+		carritos = new JButton("Carritos");
+		carritos.setBounds(450, 25, 220, 50);
+		carritos.setFont(new Font("Arial", Font.BOLD, 20));
+		carritos.setBackground(Color.green.brighter());
+		carritos.setForeground(Color.WHITE);
+		carritos.setFocusPainted(false);
+
+		crearLabel("Categoria:", 20, 0, 100, 100, Color.BLACK, 20);
+		
+		this.add(carritos);
 		this.add(cerrarSesion);
 		this.add(cambiarModo);
 		this.add(categorias);
@@ -124,6 +133,14 @@ public class Compra extends JPanel {
 
 	public void setCerrarSesion(JButton cerrarSesion) {
 		this.cerrarSesion = cerrarSesion;
+	}
+
+	public JButton getCarritos() {
+		return carritos;
+	}
+
+	public void setCarritos(JButton carritos) {
+		this.carritos = carritos;
 	}
 	
 

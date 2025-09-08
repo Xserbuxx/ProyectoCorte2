@@ -1,4 +1,5 @@
 package co.edu.unbosque.view;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,25 +10,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class CarritoPanel extends JPanel{
+public class CarritoPanel2 extends JPanel{
 	
-	private JButton selec;
+private JButton selec;
 	
-	public CarritoPanel(String nombre, int id, ActionListener e) {
+	public CarritoPanel2(String nombre, int id, ActionListener e) {
 		this.setPreferredSize(new Dimension(483, 100));
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.setLayout(null);
 		
 		selec = new JButton();
-		selec.setActionCommand("CarritoSele_"+id);
+		selec.setActionCommand("CarritoCom_"+id);
 		selec.addActionListener(e);
-		selec.setBounds(0, 0, 483, 100);
+		selec.setBounds(0, 0, 1260, 100);
 		selec.setContentAreaFilled(false);
 		selec.setBorderPainted(false);
 		selec.setFocusPainted(false);
 		
-		crearLabel(nombre,0,0,453,100,Color.black,50);
+		crearLabel(nombre,50,0,453,100,Color.black,50);
 		
 		this.setName(nombre);
 		

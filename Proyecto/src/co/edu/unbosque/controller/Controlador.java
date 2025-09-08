@@ -63,7 +63,13 @@ public class Controlador implements ActionListener {
 		vp.getMp().getPip().getAgregarCarrito().setActionCommand("Boton Agregar Carrito");
 		
 		vp.getMp().getCar().getVolver().addActionListener(this);
-		vp.getMp().getCar().getVolver().setActionCommand("Boton Modo Compra");
+		vp.getMp().getCar().getVolver().setActionCommand("Boton Cambiar Modo Compra");
+		
+		vp.getMp().getCom().getCarritos().addActionListener(this);
+		vp.getMp().getCom().getCarritos().setActionCommand("Boton Carritos");
+		
+		vp.getMp().getCar().getCrearCarrito().addActionListener(this);
+		vp.getMp().getCar().getCrearCarrito().setActionCommand("Boton Crear Carrito");
 
 		agregarProductos();
 
@@ -84,10 +90,16 @@ public class Controlador implements ActionListener {
 			vp.getMp().getPip().mostrarProductoInfo(producto.getPrecio(), producto.getNombre(), producto.getDescripcion(), producto.getUnidades(), producto.getRutaFoto(), atributo1, atributo2);
 		}
 		
-		if (boton.contains("Carrito_")) {
+		if (boton.contains("CarritoSele_")) {
 			int id = Integer.parseInt(boton.split("_")[1]);
 			JOptionPane.showMessageDialog(vp, id);
 		}
+		
+		if (boton.contains("CarritoCom_")) {
+			int id = Integer.parseInt(boton.split("_")[1]);
+			JOptionPane.showMessageDialog(vp, id);
+		}
+
 
 		switch (boton) {
 		case "Boton Registrarse":
@@ -148,6 +160,9 @@ public class Controlador implements ActionListener {
 			vp.getMp().mostrarPanel("com");
 			vp.getMp().getAca().setEnabled(false);
 			vp.getMp().getAca().setVisible(false);
+			vp.getMp().getCrc().setVisible(false);
+			vp.getMp().getCrc().setEnabled(false);
+
 			vp.revalidate();
 			vp.repaint();
 			break;
@@ -406,7 +421,6 @@ public class Controlador implements ActionListener {
 			vp.getMp().getAca().setVisible(true);
 			vp.getMp().getAca().setEnabled(true);
 			vp.getMp().getPip().add(vp.getMp().getAca());
-			agregarCarritos();
 			
 			vp.getMp().getPip().getVolver().setEnabled(false);
 			vp.getMp().getPip().getAgregarCarrito().setEnabled(false);
@@ -414,6 +428,21 @@ public class Controlador implements ActionListener {
 			vp.getMp().getPip().setComponentZOrder(vp.getMp().getAca(), 0);
 			vp.getMp().getPip().revalidate();
 			vp.getMp().getPip().repaint();
+			break;
+		case "Boton Carritos":
+			vp.getMp().mostrarPanel("car");
+			agregarCarritos();
+			break;
+		case "Boton Crear Carrito":
+			vp.getMp().getCrc().setVisible(true);
+			vp.getMp().getCrc().setEnabled(true);		
+			
+			vp.getMp().getCar().add(vp.getMp().getCrc());
+			
+			
+			vp.getMp().getCar().setComponentZOrder(vp.getMp().getCrc(), 0);
+			
+			agregarCarritos();
 			break;
 		default:
 			break;
@@ -474,14 +503,15 @@ public class Controlador implements ActionListener {
 	}
 	
 	private void agregarCarritos() {
-		vp.getMp().getAca().mostrarProductos(0, this);
-		vp.getMp().getAca().mostrarProductos(1, this);
-		vp.getMp().getAca().mostrarProductos(2, this);
-		vp.getMp().getAca().mostrarProductos(3, this);
-		vp.getMp().getAca().mostrarProductos(4, this);
-		vp.getMp().getAca().mostrarProductos(5, this);
-		vp.getMp().getAca().getScroll().revalidate();
-		vp.getMp().getAca().getScroll().repaint();
+		vp.getMp().getCar().getPanelProductos().removeAll();
+		mf.getCaDAO().getLista().forEach((carrito)-> {
+			if(carrito.getNombre().split("_")[1].equals(usuarioActual)) {
+				vp.getMp().getCar().mostrarProductos(carrito.getNombre().split("_")[0], 1, this);
+			}
+		});
+		
+		vp.getMp().getCar().getScroll().revalidate();
+		vp.getMp().getCar().getScroll().repaint();
 	}
 	
 	private Producto encontrarProducto(int id){

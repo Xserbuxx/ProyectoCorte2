@@ -19,6 +19,8 @@ public class ModelFacade {
 	private RopaDAO roDAO;
 	private TecnologiaDAO teDAO;
 	private VehiculosDAO veDAO;
+	private CarritosDAO caDAO;
+	
 
 	public ModelFacade() {
 		usDAO = new UsuariosDAO();
@@ -33,6 +35,7 @@ public class ModelFacade {
 		teDAO = new TecnologiaDAO();
 		veDAO = new VehiculosDAO();
 		productos = new ArrayList<>();
+		caDAO = new CarritosDAO();
 	}
 	
 	public void agregarProductos() {
@@ -163,6 +166,14 @@ public class ModelFacade {
 
 	public void setProductos(ArrayList<Producto> productos) {
 		this.productos = productos;
+	}
+
+	public CarritosDAO getCaDAO() {
+		return caDAO;
+	}
+
+	public void setCaDAO(CarritosDAO caDAO) {
+		this.caDAO = caDAO;
 	}
 	
 }
