@@ -1,14 +1,18 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class AgregarACarrito extends JPanel {
 	
+	private JButton volver;	
 	private JPanel panelProductos;
 	private JScrollPane scroll;
 
@@ -29,18 +33,26 @@ public class AgregarACarrito extends JPanel {
 		panelProductos = new JPanel();
 		panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
 		
+		volver = new JButton("Volver");
+		volver.setBounds(50, 25, 250, 50);
+		volver.setFont(new Font("Arial", Font.BOLD, 20));
+		volver.setBackground(Color.red.brighter());
+		volver.setForeground(Color.WHITE);
+		volver.setFocusPainted(false);
+		
 		scroll = new JScrollPane(panelProductos, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		scroll.setBounds(420, 70, 500, 550);
 		scroll.setBorder(null);
 		
+		this.add(volver);
 		this.add(scroll);
 		this.add(arriba);
 	}
 	
-	public void mostrarProductos(String nombre, int id, ActionListener e) {
-		panelProductos.add(new CarritoPanel(nombre,id, e));
+	public void mostrarProductos(String nombre, ActionListener e) {
+		panelProductos.add(new CarritoPanel(nombre, e));
 	}
 	
 	public void limpiarProductos() {
@@ -61,6 +73,14 @@ public class AgregarACarrito extends JPanel {
 
 	public void setScroll(JScrollPane scroll) {
 		this.scroll = scroll;
+	}
+
+	public JButton getVolver() {
+		return volver;
+	}
+
+	public void setVolver(JButton volver) {
+		this.volver = volver;
 	}
 	
 }

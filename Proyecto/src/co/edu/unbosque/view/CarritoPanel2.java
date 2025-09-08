@@ -14,21 +14,21 @@ public class CarritoPanel2 extends JPanel{
 	
 private JButton selec;
 	
-	public CarritoPanel2(String nombre, int id, ActionListener e) {
+	public CarritoPanel2(String nombre, ActionListener e) {
 		this.setPreferredSize(new Dimension(483, 100));
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		this.setLayout(null);
 		
 		selec = new JButton();
-		selec.setActionCommand("CarritoCom_"+id);
+		selec.setActionCommand("CarritoCom-"+nombre);
 		selec.addActionListener(e);
 		selec.setBounds(0, 0, 1260, 100);
 		selec.setContentAreaFilled(false);
 		selec.setBorderPainted(false);
 		selec.setFocusPainted(false);
 		
-		crearLabel(nombre,50,0,453,100,Color.black,50);
+		crearLabel(nombre.split("_")[0],50,0,453,100,Color.black,50);
 		
 		this.setName(nombre);
 		

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.persistence.*;
 
 public class ModelFacade {
-	
+
 	private ArrayList<Producto> productos;
 
 	private UsuariosDAO usDAO;
@@ -20,7 +20,6 @@ public class ModelFacade {
 	private TecnologiaDAO teDAO;
 	private VehiculosDAO veDAO;
 	private CarritosDAO caDAO;
-	
 
 	public ModelFacade() {
 		usDAO = new UsuariosDAO();
@@ -37,41 +36,45 @@ public class ModelFacade {
 		productos = new ArrayList<>();
 		caDAO = new CarritosDAO();
 	}
-	
+
+	public void escribir(String url, String contenido) {
+		FileHandler.escribirEnArchivoTexto(url, contenido);
+	}
+
 	public void agregarProductos() {
 		productos.removeAll(productos);
-		beDAO.getLista().forEach((producto)->{
+		beDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		deDAO.getLista().forEach((producto)->{
+		deDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		hoDAO.getLista().forEach((producto)->{
+		hoDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		juDAO.getLista().forEach((producto)->{
+		juDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		liDAO.getLista().forEach((producto)->{
+		liDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		maDAO.getLista().forEach((producto)->{
+		maDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		muDAO.getLista().forEach((producto)->{
+		muDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		roDAO.getLista().forEach((producto)->{
+		roDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		teDAO.getLista().forEach((producto)->{
+		teDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
-		veDAO.getLista().forEach((producto)->{
+		veDAO.getLista().forEach((producto) -> {
 			productos.add(producto);
 		});
 	}
-	
+
 	public UsuariosDAO getUsDAO() {
 		return usDAO;
 	}
@@ -175,5 +178,5 @@ public class ModelFacade {
 	public void setCaDAO(CarritosDAO caDAO) {
 		this.caDAO = caDAO;
 	}
-	
+
 }

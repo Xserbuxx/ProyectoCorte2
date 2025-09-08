@@ -2,6 +2,7 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 import co.edu.unbosque.model.Carrito;
+import co.edu.unbosque.model.Producto;
 
 public class CarritosDAO implements DAO<Carrito>{
 
@@ -84,9 +85,43 @@ public class CarritosDAO implements DAO<Carrito>{
 			String[] columnas = filas[i].split("_");
 			Carrito temp = new Carrito();
 			temp.setNombre(columnas[0]+"_"+columnas[1]);
+			temp.setProductos(new ArrayList<>());
 
 			lista.add(temp);
 		}
+	}
+	
+	public void LeerProductos(String url, String nombre,Producto producto) {
+		String contenido;
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			lista.forEach((carrito)->{
+				if(carrito.getNombre().equals(nombre)){
+					carrito.getProductos().add(producto);
+				}
+			});
+			
+		}
+	}
+	
+	public String devolverIDS(String url) {
+		String contenido = "";
+		contenido = FileHandler.leerArchivoTexto(url);
+		String[] filas = contenido.split("\n");
+		
+		for (int i = 0; i < filas.length; i++) {
+			if(contenido == "" || contenido.isBlank()) {
+				break;
+			}
+			contenido += filas[i]+";";
+			
+		}
+		return contenido;
 	}
 	
 	public void escribirEnArchivoTexto() {

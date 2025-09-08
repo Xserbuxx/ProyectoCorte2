@@ -2,10 +2,13 @@ package co.edu.unbosque.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import co.edu.unbosque.model.*;
+import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.view.*;
 
 public class Controlador implements ActionListener {
@@ -13,7 +16,8 @@ public class Controlador implements ActionListener {
 	private VentanaPrincipal vp;
 	private ModelFacade mf;
 	private String usuarioActual;
-	Producto protemp;
+	private Producto protemp;
+	private Carrito carritoTemp;
 
 	public Controlador() {
 		mf = new ModelFacade();
@@ -75,6 +79,15 @@ public class Controlador implements ActionListener {
 		vp.getMp().getCar().getCrearCarrito().addActionListener(this);
 		vp.getMp().getCar().getCrearCarrito().setActionCommand("Boton Crear Carrito");
 
+		vp.getMp().getCrc().getVolver().addActionListener(this);
+		vp.getMp().getCrc().getVolver().setActionCommand("Boton Volver CRC");
+
+		vp.getMp().getCrc().getCrearCarrito().addActionListener(this);
+		vp.getMp().getCrc().getCrearCarrito().setActionCommand("Boton Crear Carrito CRC");
+		
+		vp.getMp().getAca().getVolver().addActionListener(this);
+		vp.getMp().getAca().getVolver().setActionCommand("Boton Volver ACA");
+
 		agregarProductos();
 
 	}
@@ -95,14 +108,30 @@ public class Controlador implements ActionListener {
 					producto.getDescripcion(), producto.getUnidades(), producto.getRutaFoto(), atributo1, atributo2);
 		}
 
-		if (boton.contains("CarritoSele_")) {
-			int id = Integer.parseInt(boton.split("_")[1]);
-			JOptionPane.showMessageDialog(vp, id);
+		if (boton.contains("CarritoSele-")) {
+			
+			JOptionPane.showMessageDialog(vp, boton.split("-")[1]);
+			encontrarCarritoAca(boton.split("-")[1]);
+			int id = 0;
+			for (Producto producto : encontrarCarritoCar(boton.split("-")[1]).getProductos()) {
+				id = producto.getId();
+			}
+			
+			mf.escribir("Carrito_"+boton.split("-")[1]+".csv", id+"\n");
 		}
 
-		if (boton.contains("CarritoCom_")) {
-			int id = Integer.parseInt(boton.split("_")[1]);
-			JOptionPane.showMessageDialog(vp, id);
+		if (boton.contains("CarritoCom-")) {
+			encontrarCarritoCar(boton.split("-")[1]);
+			String[] ids = mf.getCaDAO().devolverIDS("Carrito_"+boton.split("-")[1]+".csv").split(";");
+			
+			System.out.println(ids.toString());
+			
+			for (int i = 0; i<ids.length;i++) {
+				mf.getCaDAO().LeerProductos("Carrito_"+boton.split("-")[1]+".csv", boton.split("-")[1], encontrarProducto(Integer.parseInt(ids[i])));
+			}
+			
+			System.out.println(mf.getCaDAO().getLista().toString());
+			
 		}
 
 		switch (boton) {
@@ -411,8 +440,14 @@ public class Controlador implements ActionListener {
 			vp.getMp().getPip().getAgregarCarrito().setEnabled(false);
 
 			vp.getMp().getPip().setComponentZOrder(vp.getMp().getAca(), 0);
-			vp.getMp().getPip().revalidate();
-			vp.getMp().getPip().repaint();
+			
+			agregarCarritosPip();
+			
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getPip().revalidate();
+				vp.getMp().getPip().repaint();
+			});
+			
 			break;
 		case "Boton Carritos":
 			vp.getMp().mostrarPanel("car");
@@ -424,6 +459,7 @@ public class Controlador implements ActionListener {
 			vp.getMp().getCrc().setEnabled(true);
 			vp.getMp().getCar().add(vp.getMp().getCrc());
 
+			vp.getMp().getCar().getVolver().setEnabled(false);
 			vp.getMp().getCar().getCrearCarrito().setEnabled(false);
 			vp.getMp().getCar().limpiarBotones();
 
@@ -433,6 +469,50 @@ public class Controlador implements ActionListener {
 				vp.getMp().getCar().revalidate();
 				vp.getMp().getCar().repaint();
 			});
+			break;
+
+		case "Boton Volver CRC":
+			vp.getMp().getCar().remove(vp.getMp().getCrc());
+
+			vp.getMp().getCar().getVolver().setEnabled(true);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+
+			agregarCarritos();
+
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getCar().revalidate();
+				vp.getMp().getCar().repaint();
+			});
+			break;
+		case "Boton Crear Carrito CRC":
+			mf.getCaDAO().crear(new Carrito(vp.getMp().getCrc().getNombreC().getText() + "_" + usuarioActual, new ArrayList<>()));
+
+			vp.getMp().getCar().remove(vp.getMp().getCrc());
+
+			vp.getMp().getCar().getVolver().setEnabled(true);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+
+			agregarCarritos();
+
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getCar().revalidate();
+				vp.getMp().getCar().repaint();
+			});
+			break;
+		case "Boton Volver ACA":
+			vp.getMp().getAca().setVisible(false);
+			vp.getMp().getAca().setEnabled(false);
+			
+			vp.getMp().getPip().remove(vp.getMp().getAca());
+
+			vp.getMp().getPip().getVolver().setEnabled(true);
+			vp.getMp().getPip().getAgregarCarrito().setEnabled(true);
+
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getPip().revalidate();
+				vp.getMp().getPip().repaint();
+			});
+			
 			break;
 		default:
 			break;
@@ -496,12 +576,25 @@ public class Controlador implements ActionListener {
 		vp.getMp().getCar().getPanelProductos().removeAll();
 		mf.getCaDAO().getLista().forEach((carrito) -> {
 			if (carrito.getNombre().split("_")[1].equals(usuarioActual)) {
-				vp.getMp().getCar().mostrarProductos(carrito.getNombre().split("_")[0], 1, this);
+				vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
 			}
 		});
 
 		vp.getMp().getCar().getScroll().revalidate();
 		vp.getMp().getCar().getScroll().repaint();
+	}
+	
+	private void agregarCarritosPip() {
+		vp.getMp().getAca().getPanelProductos().removeAll();
+		mf.getCaDAO().getLista().forEach((carrito) -> {
+			if (carrito.getNombre().split("_")[1].equals(usuarioActual)) {
+				vp.getMp().getAca().mostrarProductos(carrito.getNombre(), this);
+			}
+		});
+
+		vp.getMp().getAca().getScroll().revalidate();
+		vp.getMp().getAca().getScroll().repaint();
+		
 	}
 
 	private Producto encontrarProducto(int id) {
@@ -513,6 +606,25 @@ public class Controlador implements ActionListener {
 			}
 		});
 		return protemp;
+	}
+	
+	private void encontrarCarritoAca(String nombre) {
+		mf.getCaDAO().getLista().forEach((carrito) -> {
+			if (carrito.getNombre().equals(nombre)) {
+				carrito.getProductos().add(protemp);
+			}
+		});
+	}
+	
+	private Carrito encontrarCarritoCar(String nombre) {
+		mf.getCaDAO().getLista().forEach((carrito) -> {
+			if (carrito.getNombre().equals(nombre)) {
+				carritoTemp = new Carrito();
+				carritoTemp = carrito;
+			}
+		});
+		
+		return carritoTemp;
 	}
 
 }
