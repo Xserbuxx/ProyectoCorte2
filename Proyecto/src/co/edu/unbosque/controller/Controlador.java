@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
 import co.edu.unbosque.model.*;
-import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.view.*;
 
 public class Controlador implements ActionListener {
@@ -122,15 +121,22 @@ public class Controlador implements ActionListener {
 
 		if (boton.contains("CarritoCom-")) {
 			encontrarCarritoCar(boton.split("-")[1]);
+			
+			mf.getCaDAO().getLista().forEach((carrito)->{
+				carrito.getProductos().removeAll(carrito.getProductos());
+			});
+			
 			String[] ids = mf.getCaDAO().devolverIDS("Carrito_"+boton.split("-")[1]+".csv").split(";");
 			
-			System.out.println(ids.toString());
-			
 			for (int i = 0; i<ids.length;i++) {
-				mf.getCaDAO().LeerProductos("Carrito_"+boton.split("-")[1]+".csv", boton.split("-")[1], encontrarProducto(Integer.parseInt(ids[i])));
+				if(!ids[i].equals("")) {
+					mf.getCaDAO().LeerProductos("Carrito_"+boton.split("-")[1]+".csv", boton.split("-")[1], encontrarProducto(Integer.parseInt(ids[i])));	
+				}
 			}
 			
-			System.out.println(mf.getCaDAO().getLista().toString());
+			mf.getCaDAO().getLista().forEach((carrito)->{
+				System.out.println(carrito.getProductos().toString());
+			});
 			
 		}
 

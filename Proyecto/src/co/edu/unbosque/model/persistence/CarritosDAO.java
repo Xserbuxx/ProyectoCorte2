@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.Carrito;
 import co.edu.unbosque.model.Producto;
 
-public class CarritosDAO implements DAO<Carrito>{
-
+public class CarritosDAO implements DAO<Carrito> {
 
 	private ArrayList<Carrito> lista;
-	
 
 	public CarritosDAO() {
 		lista = new ArrayList<>();
@@ -18,14 +16,14 @@ public class CarritosDAO implements DAO<Carrito>{
 	@Override
 	public void crear(Carrito nuevoDato) {
 		try {
-		lista.forEach((carrito)->{
-			if(carrito.getNombre().equals(nuevoDato.getNombre())) {
-				throw new NullPointerException();
-			}
-		});
-		lista.add(nuevoDato);
-		escribirEnArchivoTexto();
-		}catch (Exception e) {
+			lista.forEach((carrito) -> {
+				if (carrito.getNombre().equals(nuevoDato.getNombre())) {
+					throw new NullPointerException();
+				}
+			});
+			lista.add(nuevoDato);
+			escribirEnArchivoTexto();
+		} catch (Exception e) {
 			System.out.println("puta");
 		}
 	}
@@ -51,10 +49,10 @@ public class CarritosDAO implements DAO<Carrito>{
 			return true;
 		}
 	}
-	
+
 	private String contenido;
 	private int n;
-	
+
 	@Override
 	public String mostrarDatos() {
 		contenido = "";
@@ -72,65 +70,59 @@ public class CarritosDAO implements DAO<Carrito>{
 	public int contar() {
 		return lista.size();
 	}
-	
+
 	public void LeerArchivoTexto(String url) {
 		String contenido;
 		contenido = FileHandler.leerArchivoTexto(url);
 		String[] filas = contenido.split("\n");
-		
+
 		for (int i = 0; i < filas.length; i++) {
-			if(contenido == "" || contenido.isBlank()) {
+			if (contenido == "" || contenido.isBlank()) {
 				break;
 			}
 			String[] columnas = filas[i].split("_");
 			Carrito temp = new Carrito();
-			temp.setNombre(columnas[0]+"_"+columnas[1]);
+			temp.setNombre(columnas[0] + "_" + columnas[1]);
 			temp.setProductos(new ArrayList<>());
 
 			lista.add(temp);
 		}
 	}
-	
-	public void LeerProductos(String url, String nombre,Producto producto) {
-		String contenido;
+
+	public void LeerProductos(String url, String nombre, Producto producto) {
 		contenido = FileHandler.leerArchivoTexto(url);
-		String[] filas = contenido.split("\n");
-		
-		for (int i = 0; i < filas.length; i++) {
-			if(contenido == "" || contenido.isBlank()) {
-				break;
+
+		lista.forEach((carrito) -> {
+			if (carrito.getNombre().equals(nombre)) {
+				carrito.getProductos().add(producto);
 			}
-			lista.forEach((carrito)->{
-				if(carrito.getNombre().equals(nombre)){
-					carrito.getProductos().add(producto);
-				}
-			});
-			
-		}
+		});
+
 	}
-	
+
 	public String devolverIDS(String url) {
 		String contenido = "";
 		contenido = FileHandler.leerArchivoTexto(url);
 		String[] filas = contenido.split("\n");
-		
+		String resultado = "";
+
 		for (int i = 0; i < filas.length; i++) {
-			if(contenido == "" || contenido.isBlank()) {
+			if (contenido == "" || contenido.isBlank()) {
 				break;
 			}
-			contenido += filas[i]+";";
-			
+			resultado += filas[i] + ";";
+
 		}
-		return contenido;
+		return resultado;
 	}
-	
+
 	public void escribirEnArchivoTexto() {
 		contenido = "";
 
 		lista.forEach((carrito) -> {
-			contenido += carrito.getNombre()+"\n";
+			contenido += carrito.getNombre() + "\n";
 		});
-		
+
 		FileHandler.escribirEnArchivoTexto("Carritos.csv", contenido);
 	}
 
