@@ -16,8 +16,8 @@ public class CrearCarrito extends JPanel{
 		this.setBackground(new Color(211,211,211,200));
 		
 		JPanel arriba = new JPanel();
-		arriba.setBounds(420,20,500,50);
-		arriba.setBackground(Color.GREEN.brighter());
+		arriba.setBounds(400,150,500,300);
+		arriba.setBackground(Color.WHITE);
 		
 		this.add(arriba);
 	}
