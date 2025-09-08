@@ -83,7 +83,7 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getCrc().getCrearCarrito().addActionListener(this);
 		vp.getMp().getCrc().getCrearCarrito().setActionCommand("Boton Crear Carrito CRC");
-		
+
 		vp.getMp().getAca().getVolver().addActionListener(this);
 		vp.getMp().getAca().getVolver().setActionCommand("Boton Volver ACA");
 
@@ -108,36 +108,39 @@ public class Controlador implements ActionListener {
 		}
 
 		if (boton.contains("CarritoSele-")) {
-			
 			JOptionPane.showMessageDialog(vp, boton.split("-")[1]);
-			encontrarCarritoAca(boton.split("-")[1]);
-			int id = 0;
-			for (Producto producto : encontrarCarritoCar(boton.split("-")[1]).getProductos()) {
-				id = producto.getId();
-			}
 			
-			mf.escribir("Carrito_"+boton.split("-")[1]+".csv", id+"\n");
+			encontrarCarritoAca(boton.split("-")[1]);
+			
+			String id = "";
+			
+			for (Producto producto : encontrarCarritoCar(boton.split("-")[1]).getProductos()) {
+				id += producto.getId()+"\n";
+			}
+
+			mf.escribir("Carrito_" + boton.split("-")[1] + ".csv", id);
 		}
 
 		if (boton.contains("CarritoCom-")) {
 			encontrarCarritoCar(boton.split("-")[1]);
-			
-			mf.getCaDAO().getLista().forEach((carrito)->{
+
+			mf.getCaDAO().getLista().forEach((carrito) -> {
 				carrito.getProductos().removeAll(carrito.getProductos());
 			});
-			
-			String[] ids = mf.getCaDAO().devolverIDS("Carrito_"+boton.split("-")[1]+".csv").split(";");
-			
-			for (int i = 0; i<ids.length;i++) {
-				if(!ids[i].equals("")) {
-					mf.getCaDAO().LeerProductos("Carrito_"+boton.split("-")[1]+".csv", boton.split("-")[1], encontrarProducto(Integer.parseInt(ids[i])));	
+
+			String[] ids = mf.getCaDAO().devolverIDS("Carrito_" + boton.split("-")[1] + ".csv").split(";");
+
+			for (int i = 0; i < ids.length; i++) {
+				if (!ids[i].equals("")) {
+					mf.getCaDAO().LeerProductos("Carrito_" + boton.split("-")[1] + ".csv", boton.split("-")[1],
+							encontrarProducto(Integer.parseInt(ids[i])));
 				}
 			}
-			
-			mf.getCaDAO().getLista().forEach((carrito)->{
+
+			mf.getCaDAO().getLista().forEach((carrito) -> {
 				System.out.println(carrito.getProductos().toString());
 			});
-			
+
 		}
 
 		switch (boton) {
@@ -446,14 +449,14 @@ public class Controlador implements ActionListener {
 			vp.getMp().getPip().getAgregarCarrito().setEnabled(false);
 
 			vp.getMp().getPip().setComponentZOrder(vp.getMp().getAca(), 0);
-			
+
 			agregarCarritosPip();
-			
+
 			SwingUtilities.invokeLater(() -> {
 				vp.getMp().getPip().revalidate();
 				vp.getMp().getPip().repaint();
 			});
-			
+
 			break;
 		case "Boton Carritos":
 			vp.getMp().mostrarPanel("car");
@@ -491,7 +494,8 @@ public class Controlador implements ActionListener {
 			});
 			break;
 		case "Boton Crear Carrito CRC":
-			mf.getCaDAO().crear(new Carrito(vp.getMp().getCrc().getNombreC().getText() + "_" + usuarioActual, new ArrayList<>()));
+			mf.getCaDAO().crear(
+					new Carrito(vp.getMp().getCrc().getNombreC().getText() + "_" + usuarioActual, new ArrayList<>()));
 
 			vp.getMp().getCar().remove(vp.getMp().getCrc());
 
@@ -508,7 +512,7 @@ public class Controlador implements ActionListener {
 		case "Boton Volver ACA":
 			vp.getMp().getAca().setVisible(false);
 			vp.getMp().getAca().setEnabled(false);
-			
+
 			vp.getMp().getPip().remove(vp.getMp().getAca());
 
 			vp.getMp().getPip().getVolver().setEnabled(true);
@@ -518,7 +522,7 @@ public class Controlador implements ActionListener {
 				vp.getMp().getPip().revalidate();
 				vp.getMp().getPip().repaint();
 			});
-			
+
 			break;
 		default:
 			break;
@@ -589,7 +593,7 @@ public class Controlador implements ActionListener {
 		vp.getMp().getCar().getScroll().revalidate();
 		vp.getMp().getCar().getScroll().repaint();
 	}
-	
+
 	private void agregarCarritosPip() {
 		vp.getMp().getAca().getPanelProductos().removeAll();
 		mf.getCaDAO().getLista().forEach((carrito) -> {
@@ -600,7 +604,7 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getAca().getScroll().revalidate();
 		vp.getMp().getAca().getScroll().repaint();
-		
+
 	}
 
 	private Producto encontrarProducto(int id) {
@@ -613,7 +617,7 @@ public class Controlador implements ActionListener {
 		});
 		return protemp;
 	}
-	
+
 	private void encontrarCarritoAca(String nombre) {
 		mf.getCaDAO().getLista().forEach((carrito) -> {
 			if (carrito.getNombre().equals(nombre)) {
@@ -621,7 +625,7 @@ public class Controlador implements ActionListener {
 			}
 		});
 	}
-	
+
 	private Carrito encontrarCarritoCar(String nombre) {
 		mf.getCaDAO().getLista().forEach((carrito) -> {
 			if (carrito.getNombre().equals(nombre)) {
@@ -629,7 +633,7 @@ public class Controlador implements ActionListener {
 				carritoTemp = carrito;
 			}
 		});
-		
+
 		return carritoTemp;
 	}
 
