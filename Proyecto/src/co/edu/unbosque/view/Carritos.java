@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class Carritos extends JPanel {
 
@@ -17,6 +17,8 @@ public class Carritos extends JPanel {
 	private JButton crearCarrito;
 	private JScrollPane scroll;
 	private JPanel panelProductos;
+	private JTextField filtro;
+	private JButton filtrar;
 
 	public Carritos() {
 		iniciarComponente();
@@ -43,6 +45,17 @@ public class Carritos extends JPanel {
 		crearCarrito.setBackground(Color.green.brighter());
 		crearCarrito.setForeground(Color.WHITE);
 		crearCarrito.setFocusPainted(false);
+		
+		filtrar = new JButton("Filtrar");
+		filtrar.setBounds(1075, 25, 150, 50);
+		filtrar.setFont(new Font("Arial", Font.BOLD, 20));
+		filtrar.setBackground(new Color(52, 131, 250));
+		filtrar.setForeground(Color.WHITE);
+		filtrar.setFocusPainted(false);
+		
+		filtro = new JTextField();
+		filtro.setBounds(650, 25, 380, 50);
+		filtro.setFont(new Font("Arial", Font.BOLD, 22));
 
 		panelProductos = new JPanel();
 		panelProductos.setLayout(new BoxLayout(panelProductos, BoxLayout.Y_AXIS));
@@ -51,7 +64,9 @@ public class Carritos extends JPanel {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		scroll.setBounds(0, 100, 1265, 583);
-
+		
+		this.add(filtrar);
+		this.add(filtro);
 		this.add(crearCarrito);
 		this.add(scroll);
 		this.add(volver);
@@ -107,4 +122,20 @@ public class Carritos extends JPanel {
 		this.crearCarrito = crearCarrito;
 	}
 
+	public JTextField getFiltro() {
+		return filtro;
+	}
+
+	public void setFiltro(JTextField filtro) {
+		this.filtro = filtro;
+	}
+
+	public JButton getFiltrar() {
+		return filtrar;
+	}
+
+	public void setFiltrar(JButton filtrar) {
+		this.filtrar = filtrar;
+	}
+	
 }

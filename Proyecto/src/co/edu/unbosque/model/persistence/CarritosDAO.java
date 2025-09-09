@@ -89,12 +89,11 @@ public class CarritosDAO implements DAO<Carrito> {
 		}
 	}
 
-	public void LeerProductos(String url, String nombre, Producto producto) {
-		contenido = FileHandler.leerArchivoTexto(url);
-
+	public void LeerProductos(String nombre, Producto producto) {
 		lista.forEach((carrito) -> {
 			if (carrito.getNombre().equals(nombre)) {
 				carrito.getProductos().add(producto);
+				return;
 			}
 		});
 

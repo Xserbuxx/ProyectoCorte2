@@ -15,6 +15,7 @@ public class ManejarPanel extends JPanel{
 	private Carritos car;
 	private AgregarACarrito aca;
 	private CrearCarrito crc;
+	private Factura fac;
 	
 	public ManejarPanel() {
 		iniciarComponentes();
@@ -33,6 +34,7 @@ public class ManejarPanel extends JPanel{
 		car = new Carritos();
 		aca = new AgregarACarrito();
 		crc = new CrearCarrito();
+		fac = new Factura();
 		
 		this.add(vis, "vis");
 		this.add(reg, "reg");
@@ -40,6 +42,7 @@ public class ManejarPanel extends JPanel{
 		this.add(ven, "ven");
 		this.add(pip, "pip");
 		this.add(car, "car");
+		this.add(fac, "fac");
 		
 	}
 	
@@ -117,6 +120,14 @@ public class ManejarPanel extends JPanel{
 
 	public void setCrc(CrearCarrito crc) {
 		this.crc = crc;
+	}
+
+	public Factura getFac() {
+		return fac;
+	}
+
+	public void setFac(Factura fac) {
+		this.fac = fac;
 	}
 	
 }

@@ -87,9 +87,17 @@ public class Controlador implements ActionListener {
 		vp.getMp().getAca().getVolver().addActionListener(this);
 		vp.getMp().getAca().getVolver().setActionCommand("Boton Volver ACA");
 
+		vp.getMp().getCar().getFiltrar().addActionListener(this);
+		vp.getMp().getCar().getFiltrar().setActionCommand("Boton Filtrar");
+
+		vp.getMp().getFac().getVolver().addActionListener(this);
+		vp.getMp().getFac().getVolver().setActionCommand("Boton Volver FAC");
+
 		agregarProductos();
 
 	}
+
+	private float total = 0;
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -109,13 +117,13 @@ public class Controlador implements ActionListener {
 
 		if (boton.contains("CarritoSele-")) {
 			JOptionPane.showMessageDialog(vp, boton.split("-")[1]);
-			
+
 			encontrarCarritoAca(boton.split("-")[1]);
-			
+
 			String id = "";
-			
+
 			for (Producto producto : encontrarCarritoCar(boton.split("-")[1]).getProductos()) {
-				id += producto.getId()+"\n";
+				id += producto.getId() + "\n";
 			}
 
 			mf.escribir("Carrito_" + boton.split("-")[1] + ".csv", id);
@@ -125,20 +133,48 @@ public class Controlador implements ActionListener {
 			encontrarCarritoCar(boton.split("-")[1]);
 
 			mf.getCaDAO().getLista().forEach((carrito) -> {
-				carrito.getProductos().removeAll(carrito.getProductos());
+				if (carrito == carritoTemp) {
+					carrito.getProductos().removeAll(carrito.getProductos());
+				}
 			});
 
 			String[] ids = mf.getCaDAO().devolverIDS("Carrito_" + boton.split("-")[1] + ".csv").split(";");
 
 			for (int i = 0; i < ids.length; i++) {
 				if (!ids[i].equals("")) {
-					mf.getCaDAO().LeerProductos("Carrito_" + boton.split("-")[1] + ".csv", boton.split("-")[1],
-							encontrarProducto(Integer.parseInt(ids[i])));
+					mf.getCaDAO().LeerProductos(boton.split("-")[1], encontrarProducto(Integer.parseInt(ids[i])));
 				}
 			}
 
+			vp.getMp().getCar().add(vp.getMp().getFac());
+			vp.getMp().getFac().setEnabled(true);
+			vp.getMp().getFac().setVisible(true);
+			vp.getMp().getCar().getVolver().setEnabled(false);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(false);
+			vp.getMp().getCar().getFiltro().setEnabled(false);
+			vp.getMp().getCar().getFiltrar().setEnabled(false);
+			vp.getMp().getCar().limpiarBotones();
+			vp.getMp().getCar().setComponentZOrder(vp.getMp().getFac(), 0);
+
+			total = 0;
+
+			vp.getMp().getFac().getPanelProductos().removeAll();
 			mf.getCaDAO().getLista().forEach((carrito) -> {
-				System.out.println(carrito.getProductos().toString());
+				if (carrito.getNombre().equals(boton.split("-")[1])) {
+					carrito.getProductos().forEach((producto) -> {
+						vp.getMp().getFac().mostrarProductos(producto.getNombre(), producto.getPrecio(),
+								producto.getRutaFoto());
+						total += producto.getPrecio();
+					});
+				}
+			});
+
+			vp.getMp().getFac().mostrarTotal(total + "");
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getFac().getScroll().revalidate();
+				vp.getMp().getFac().getScroll().repaint();
+				vp.getMp().getCar().revalidate();
+				vp.getMp().getCar().repaint();
 			});
 
 		}
@@ -523,6 +559,41 @@ public class Controlador implements ActionListener {
 				vp.getMp().getPip().repaint();
 			});
 
+			break;
+		case "Boton Filtrar":
+			vp.getMp().getCar().getPanelProductos().removeAll();
+			mf.getCaDAO().getLista().forEach((carrito) -> {
+				if (carrito.getNombre().split("_")[1].equals(usuarioActual)
+						&& carrito.getNombre().split("_")[0].contains(vp.getMp().getCar().getFiltro().getText())) {
+					vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
+				}
+			});
+
+			vp.getMp().getCar().getScroll().revalidate();
+			vp.getMp().getCar().getScroll().repaint();
+			break;
+		case "Boton Volver FAC":
+			vp.getMp().getFac().setVisible(false);
+			vp.getMp().getFac().setEnabled(false);
+			vp.getMp().getCar().remove(vp.getMp().getFac());
+
+			vp.getMp().getCar().getPanelProductos().removeAll();
+			mf.getCaDAO().getLista().forEach((carrito) -> {
+				if (carrito.getNombre().split("_")[1].equals(usuarioActual)
+						&& carrito.getNombre().split("_")[0].contains(vp.getMp().getCar().getFiltro().getText())) {
+					vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
+				}
+			});
+
+			vp.getMp().getCar().getVolver().setEnabled(true);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+			vp.getMp().getCar().getFiltro().setEnabled(true);
+			vp.getMp().getCar().getFiltrar().setEnabled(true);
+
+			vp.getMp().getCar().getScroll().revalidate();
+			vp.getMp().getCar().getScroll().repaint();
+			vp.getMp().getFac().revalidate();
+			vp.getMp().getFac().repaint();
 			break;
 		default:
 			break;
