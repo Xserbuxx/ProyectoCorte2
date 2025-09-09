@@ -3,7 +3,6 @@ package co.edu.unbosque.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +14,7 @@ public class Factura extends JPanel {
 	private JButton volver;
 	private JPanel panelProductos;
 	private JScrollPane scroll;
+	private JButton comprar;
 
 	public Factura() {
 		iniciarComponentes();
@@ -27,7 +27,7 @@ public class Factura extends JPanel {
 		this.setBackground(new Color(211, 211, 211, 200));
 
 		JPanel arriba = new JPanel();
-		arriba.setBounds(420, 20, 500, 50);
+		arriba.setBounds(400, 20, 500, 50);
 		arriba.setBackground(Color.GREEN.brighter());
 
 		panelProductos = new JPanel();
@@ -39,13 +39,21 @@ public class Factura extends JPanel {
 		volver.setBackground(Color.red.brighter());
 		volver.setForeground(Color.WHITE);
 		volver.setFocusPainted(false);
+		
+		comprar = new JButton("Comprar");
+		comprar.setBounds(980, 25, 250, 50);
+		comprar.setFont(new Font("Arial", Font.BOLD, 20));
+		comprar.setBackground(Color.green.brighter());
+		comprar.setForeground(Color.WHITE);
+		comprar.setFocusPainted(false);
 
 		scroll = new JScrollPane(panelProductos, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-		scroll.setBounds(420, 70, 500, 550);
+		scroll.setBounds(400, 70, 500, 550);
 		scroll.setBorder(null);
 		
+		this.add(comprar);
 		this.add(volver);
 		this.add(scroll);
 		this.add(arriba);

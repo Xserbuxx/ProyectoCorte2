@@ -506,6 +506,8 @@ public class Controlador implements ActionListener {
 
 			vp.getMp().getCar().getVolver().setEnabled(false);
 			vp.getMp().getCar().getCrearCarrito().setEnabled(false);
+			vp.getMp().getCar().getFiltro().setEnabled(false);
+			vp.getMp().getCar().getFiltrar().setEnabled(false);
 			vp.getMp().getCar().limpiarBotones();
 
 			vp.getMp().getCar().setComponentZOrder(vp.getMp().getCrc(), 0);
@@ -521,6 +523,10 @@ public class Controlador implements ActionListener {
 
 			vp.getMp().getCar().getVolver().setEnabled(true);
 			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+			vp.getMp().getCar().getFiltro().setEnabled(true);
+			vp.getMp().getCar().getFiltrar().setEnabled(true);
+
+			vp.getMp().getCrc().getNombreC().setText("");
 
 			agregarCarritos();
 
@@ -530,13 +536,23 @@ public class Controlador implements ActionListener {
 			});
 			break;
 		case "Boton Crear Carrito CRC":
-			mf.getCaDAO().crear(
-					new Carrito(vp.getMp().getCrc().getNombreC().getText() + "_" + usuarioActual, new ArrayList<>()));
+
+			if (!vp.getMp().getCrc().getNombreC().getText().equals("")) {
+				mf.getCaDAO().crear(new Carrito(vp.getMp().getCrc().getNombreC().getText() + "_" + usuarioActual,
+						new ArrayList<>()));
+			}
+			else {
+				throw new NullPointerException();
+			}
 
 			vp.getMp().getCar().remove(vp.getMp().getCrc());
 
+			vp.getMp().getCrc().getNombreC().setText("");
+
 			vp.getMp().getCar().getVolver().setEnabled(true);
 			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+			vp.getMp().getCar().getFiltro().setEnabled(true);
+			vp.getMp().getCar().getFiltrar().setEnabled(true);
 
 			agregarCarritos();
 
@@ -561,13 +577,7 @@ public class Controlador implements ActionListener {
 
 			break;
 		case "Boton Filtrar":
-			vp.getMp().getCar().getPanelProductos().removeAll();
-			mf.getCaDAO().getLista().forEach((carrito) -> {
-				if (carrito.getNombre().split("_")[1].equals(usuarioActual)
-						&& carrito.getNombre().split("_")[0].contains(vp.getMp().getCar().getFiltro().getText())) {
-					vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
-				}
-			});
+			agregarCarritos();
 
 			vp.getMp().getCar().getScroll().revalidate();
 			vp.getMp().getCar().getScroll().repaint();
@@ -577,21 +587,13 @@ public class Controlador implements ActionListener {
 			vp.getMp().getFac().setEnabled(false);
 			vp.getMp().getCar().remove(vp.getMp().getFac());
 
-			vp.getMp().getCar().getPanelProductos().removeAll();
-			mf.getCaDAO().getLista().forEach((carrito) -> {
-				if (carrito.getNombre().split("_")[1].equals(usuarioActual)
-						&& carrito.getNombre().split("_")[0].contains(vp.getMp().getCar().getFiltro().getText())) {
-					vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
-				}
-			});
+			agregarCarritos();
 
 			vp.getMp().getCar().getVolver().setEnabled(true);
 			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
 			vp.getMp().getCar().getFiltro().setEnabled(true);
 			vp.getMp().getCar().getFiltrar().setEnabled(true);
 
-			vp.getMp().getCar().getScroll().revalidate();
-			vp.getMp().getCar().getScroll().repaint();
 			vp.getMp().getFac().revalidate();
 			vp.getMp().getFac().repaint();
 			break;
@@ -656,7 +658,8 @@ public class Controlador implements ActionListener {
 	private void agregarCarritos() {
 		vp.getMp().getCar().getPanelProductos().removeAll();
 		mf.getCaDAO().getLista().forEach((carrito) -> {
-			if (carrito.getNombre().split("_")[1].equals(usuarioActual)) {
+			if (carrito.getNombre().split("_")[1].equals(usuarioActual)
+					&& carrito.getNombre().split("_")[0].contains(vp.getMp().getCar().getFiltro().getText())) {
 				vp.getMp().getCar().mostrarProductos(carrito.getNombre(), this);
 			}
 		});
