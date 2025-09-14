@@ -49,4 +49,13 @@ public class FileHandler {
 			return null;
 		}
 	}
+
+	public static boolean eliminarArchivo(String url) {
+		archivo = new File(url);
+		if (archivo.exists()) {
+			return archivo.delete();
+		} else {
+			return false;
+		}
+	}
 }

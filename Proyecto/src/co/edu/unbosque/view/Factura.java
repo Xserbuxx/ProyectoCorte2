@@ -124,5 +124,13 @@ public class Factura extends JPanel {
 	public void setScroll(JScrollPane scroll) {
 		this.scroll = scroll;
 	}
+
+	public JButton getComprar() {
+		return comprar;
+	}
+
+	public void setComprar(JButton comprar) {
+		this.comprar = comprar;
+	}
 	
 }

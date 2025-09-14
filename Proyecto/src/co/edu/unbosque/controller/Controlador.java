@@ -92,6 +92,15 @@ public class Controlador implements ActionListener {
 
 		vp.getMp().getFac().getVolver().addActionListener(this);
 		vp.getMp().getFac().getVolver().setActionCommand("Boton Volver FAC");
+		
+		vp.getMp().getEc().getVolver().addActionListener(this);
+		vp.getMp().getEc().getVolver().setActionCommand("Boton Volver EC");	
+		
+		vp.getMp().getFac().getComprar().addActionListener(this);
+		vp.getMp().getFac().getComprar().setActionCommand("Boton Comprar FAC");
+		
+		vp.getMp().getCc().getVolver().addActionListener(this);
+		vp.getMp().getCc().getVolver().setActionCommand("Boton Volver CC");
 
 		agregarProductos();
 
@@ -177,6 +186,38 @@ public class Controlador implements ActionListener {
 				vp.getMp().getCar().repaint();
 			});
 
+		}
+		
+		if (boton.contains("EliminarCarrito-")) {
+			
+			vp.getMp().getCar().add(vp.getMp().getEc());
+			
+			vp.getMp().getEc().setEnabled(true);
+			vp.getMp().getEc().setVisible(true);
+			vp.getMp().getCar().getVolver().setEnabled(false);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(false);
+			vp.getMp().getCar().getFiltro().setEnabled(false);
+			vp.getMp().getCar().getFiltrar().setEnabled(false);
+			vp.getMp().getCar().limpiarBotones();
+			vp.getMp().getCar().setComponentZOrder(vp.getMp().getEc(), 0);
+			
+			SwingUtilities.invokeLater(() -> {
+				vp.getMp().getCar().revalidate();
+				vp.getMp().getCar().repaint();
+			});
+			
+			/*
+			encontrarCarritoCar(boton.split("-")[1]);
+
+			mf.getCaDAO().eliminar(carritoTemp);
+			mf.getCaDAO().eliminarCarrito("Carrito_" + carritoTemp.getNombre() + ".csv");
+
+			vp.getMp().getCar().getPanelProductos().removeAll();
+			agregarCarritos();
+
+			vp.getMp().getCar().getScroll().revalidate();
+			vp.getMp().getCar().getScroll().repaint();
+			*/
 		}
 
 		switch (boton) {
@@ -596,6 +637,54 @@ public class Controlador implements ActionListener {
 
 			vp.getMp().getFac().revalidate();
 			vp.getMp().getFac().repaint();
+			break;
+		case "Boton Volver EC":
+			vp.getMp().getEc().setVisible(false);
+			vp.getMp().getEc().setEnabled(false);
+			vp.getMp().getCar().remove(vp.getMp().getEc());
+			
+			agregarCarritos();
+			
+			vp.getMp().getCar().getVolver().setEnabled(true);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+			vp.getMp().getCar().getFiltro().setEnabled(true);
+			vp.getMp().getCar().getFiltrar().setEnabled(true);
+			
+			vp.getMp().getEc().revalidate();
+			vp.getMp().getEc().repaint();
+			break;
+		case "Boton Comprar FAC":
+			vp.getMp().getFac().setVisible(false);
+			vp.getMp().getFac().setEnabled(false);
+			vp.getMp().getCar().remove(vp.getMp().getFac());
+
+			vp.getMp().getFac().revalidate();
+			vp.getMp().getFac().repaint();
+			
+			vp.getMp().getCar().add(vp.getMp().getCc());
+			vp.getMp().getCc().setEnabled(true);
+			vp.getMp().getCc().setVisible(true);
+			vp.getMp().getCar().setComponentZOrder(vp.getMp().getCc(), 0);
+			
+			vp.getMp().getCc().mostrarTitulo(total);
+			
+			vp.getMp().getCc().revalidate();
+			vp.getMp().getCc().repaint();
+			break;
+		case "Boton Volver CC":
+			vp.getMp().getCc().setVisible(false);
+			vp.getMp().getCc().setEnabled(false);
+			vp.getMp().getCar().remove(vp.getMp().getCc());
+			
+			agregarCarritos();
+			
+			vp.getMp().getCar().getVolver().setEnabled(true);
+			vp.getMp().getCar().getCrearCarrito().setEnabled(true);
+			vp.getMp().getCar().getFiltro().setEnabled(true);
+			vp.getMp().getCar().getFiltrar().setEnabled(true);
+			
+			vp.getMp().getCc().revalidate();
+			vp.getMp().getCc().repaint();
 			break;
 		default:
 			break;

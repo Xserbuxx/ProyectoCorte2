@@ -49,6 +49,17 @@ public class CarritosDAO implements DAO<Carrito> {
 			return true;
 		}
 	}
+	
+	public boolean eliminar(Carrito carrito) {
+		if (lista.contains(carrito)) {
+			lista.remove(carrito);
+			escribirEnArchivoTexto();
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 
 	private String contenido;
 	private int n;
@@ -123,6 +134,10 @@ public class CarritosDAO implements DAO<Carrito> {
 		});
 
 		FileHandler.escribirEnArchivoTexto("Carritos.csv", contenido);
+	}
+	
+	public void eliminarCarrito(String url) {
+		FileHandler.eliminarArchivo(url);
 	}
 
 	public ArrayList<Carrito> getLista() {
