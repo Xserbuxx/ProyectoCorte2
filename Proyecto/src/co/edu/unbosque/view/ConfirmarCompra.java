@@ -11,6 +11,7 @@ public class ConfirmarCompra extends JPanel {
 
 	private JButton volver;
 	private JButton comprar;
+	private JLabel precioLabel;
 
 	public ConfirmarCompra() {
 		this.setBounds(0, 0, 1280, 720);
@@ -41,12 +42,16 @@ public class ConfirmarCompra extends JPanel {
 	}
 
 	public void mostrarTitulo(float precio) {
+		if(precioLabel != null) {
+			this.remove(precioLabel);
+			
+		}
 		JLabel titulo = new JLabel("Estas a punto de realizar una compra por:");
 		titulo.setBounds(435, 260, 460, 50);
 		titulo.setForeground(Color.black);
 		titulo.setFont(new Font("Arial", Font.BOLD, 22));
 
-		JLabel precioLabel = new JLabel("$" + precio);
+		precioLabel = new JLabel("$" + precio);
 		precioLabel.setBounds(610, 290, 200, 50);
 		precioLabel.setForeground(Color.black);
 		precioLabel.setFont(new Font("Arial", Font.BOLD, 22));
